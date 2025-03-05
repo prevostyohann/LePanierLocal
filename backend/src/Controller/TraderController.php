@@ -52,4 +52,27 @@ class TraderController extends AbstractController
             }, $products)
         ]);
     }
+
+    #[Route('/api/traders', name: 'trader_list', methods: ['GET'])]
+    public function getTraders(): JsonResponse
+    {
+        $traders = $this->entityManager->getRepository(Trader::class)->findAll();
+
+        $tradersArray = [];
+        foreach ($traders as $trader) {
+            $tradersArray[] = [
+                'id' => $trader->getId(),
+                'name' => $trader->getName(),
+                'description' => $trader->getDescription(),
+                'email' => $trader->getEmail(),
+                'phone' => $trader->getPhone(),
+                'address' => $trader->getAddress(),
+                'hours_of_operation' => $trader->getHoursOfOperation(),
+                'siret' => $trader->getSiret(),
+                'profile_picture' => $trader->getProfilePicture(),
+            ];
+        }
+
+        return new JsonResponse($tradersArray, JsonResponse::HTTP_OK);
+    }
 }
