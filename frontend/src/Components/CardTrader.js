@@ -13,8 +13,8 @@ const CardTrader = () => {
             const response = await axios.get('http://localhost:8000/api/traders');
             console.log("Données reçues :", response.data); // Debug
     
-            if (Array.isArray(response.data)) {
-                setTraders(response.data);
+            if (Array.isArray(response.data.member)) {
+                setTraders(response.data.member);
             } else {
                 throw new Error("Format de réponse inattendu");
             }
