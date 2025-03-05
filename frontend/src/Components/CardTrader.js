@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
-function TradersList() {
+const CardTrader = () => {
     const [traders, setTraders] = useState([]); // Stocke les traders
     const [errorMessage, setErrorMessage] = useState(''); // Gère les erreurs
 
@@ -11,8 +13,8 @@ function TradersList() {
             const response = await axios.get('http://localhost:8000/api/traders');
             console.log("Données reçues :", response.data); // Debug
     
-            if (Array.isArray(response.data.member)) {
-                setTraders(response.data.member);
+            if (Array.isArray(response.data)) {
+                setTraders(response.data);
             } else {
                 throw new Error("Format de réponse inattendu");
             }
@@ -22,35 +24,35 @@ function TradersList() {
         }
     };
     
-    
     // Charger les traders au montage du composant
     useEffect(() => {
         fetchTraders();
     }, []);
 
     return (
-        <div>
-            <h2>Vos boutiques : </h2>
-
+        <div className="container">
+            <h2>Vos boutiques :</h2>
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-
-            {traders.length > 0 ? (
-                <ul>
-                    {traders.map((trader) => (
-                        <li key={trader.id}>
-                            <h3>{trader.name}</h3>
-                            <p>{trader.description || "Aucune description"}</p>
-                            <a href={`/Tradershop/${trader.id}`}>
-                                <button>Visiter la boutique</button>
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>Aucun trader trouvé.</p>
-            )}
+            <div className="row">
+                {traders.length > 0 ? (
+                    traders.map(trader => (
+                        <div className="col-md-4" key={trader.id}>
+                            <div className="card" style={{ width: '18rem' }}>
+                                <div className="card-body">
+                                    <img src={trader.profile_picture || 'default_image_url'} alt="logo" className="card-img-top" />
+                                    <h5 className="card-title">{trader.name}</h5>
+                                    <p className="card-text">{trader.description || "Aucune description"}</p>
+                                    <Link to={`/trader/${trader.id}`} className="btn btn-primary">Visitez la boutique</Link>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>Aucun trader trouvé.</p>
+                )}
+            </div>
         </div>
     );
-}
+};
 
-export default TradersList;
+export default CardTrader;
