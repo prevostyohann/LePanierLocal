@@ -7,6 +7,9 @@ use App\Repository\TraderRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 
 
@@ -60,6 +63,12 @@ class Trader implements PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne]
     private ?SubCategory $SubCategory = null;
+
+    
+    /**
+ * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="trader")
+ */
+    private Collection $messages;
 
     public function getId(): ?int
     {
@@ -230,5 +239,15 @@ class Trader implements PasswordAuthenticatedUserInterface
         $this->SubCategory = $SubCategory;
 
         return $this;
+    }
+
+    public function __construct()
+    {
+    $this->messages = new ArrayCollection();
+    }
+
+    public function getMessages(): Collection
+    {
+    return $this->messages;
     }
 }
