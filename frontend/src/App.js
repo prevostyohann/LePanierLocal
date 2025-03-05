@@ -1,6 +1,6 @@
 import './App.css';
 import Login from './Components/Login';
-import Product from './Components/Product';
+import TraderProduct from './Components/TraderProduct';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home'
 import About from './Components/About';
@@ -16,7 +16,9 @@ import CGV from './Components/CGV';
 import CGU from './Components/CGU';
 import Contact from './Components/Contact';
 import ProfilTrader from './Components/ProfilTrader';
+import TraderShop from './Components/TraderShop';
 import MentionsLegales from './Components/MentionsLegales';
+
 
  
  
@@ -44,16 +46,20 @@ function App() {
         <Route path="/Register" element= {<MyUserRegister/>}/>
         
         <Route path='/registerTrader' element={<MyTraderRegister/>}/>
-        <Route path="/Product" element= {<Product/>}/>
+        <Route path="/TraderProduct" element= {<TraderProduct/>}/>
         <Route path="/Favorite" element={<Favorite/>}/>
         <Route path="/Message" element={<Message/>}/>
         <Route path="/Forum" element={<Forum/>}/>
         <Route path="/CGV" element={<CGV />} />
         <Route path="/CGU" element={<CGU />} />
+        {/* <Route path="/Contact" element={<Contact/>} /> */}
+        <Route path='ProfilTrader' element={<ProfilTrader/>} />
+        <Route path='TraderShop' element={<TraderShop/>} />
         <Route path="/Contact" element={<Contact/>} /> 
         <Route path='/MentionsLegales' element={<MentionsLegales/>}/>
         <Route path='/ProfilTrader' element={<ProfilTrader/>} />
  
+
       </Routes>
     </Router>
   );

@@ -146,4 +146,16 @@ final class ProductController extends AbstractController
             return new JsonResponse(['error' => 'Token CSRF invalide.'], JsonResponse::HTTP_FORBIDDEN);
         }
     }
+
+    #[Route('/products/trader/{trader_id}', name: 'show_trader_products', methods: ['GET'])]
+    public function showProduct(int $trader_id, ProductRepository $productRepository): JsonResponse
+    {
+        $products = $productRepository->findBy(['trader' => $trader_id]);
+
+        if (!$products) {
+            return new JsonResponse(['message' => 'Aucun produit trouvé pour ce trader.'], 404);
+        }
+
+        return $this->json($products, 200, [], ['groups' => 'product:read']);
+    }
 };
