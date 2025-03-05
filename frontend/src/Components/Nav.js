@@ -76,7 +76,7 @@ function MyAppNav() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to='/ProfilTrader'>Profil</Link>
+              <Link className="nav-link text-white" to='/ProfilTrader'>Produits</Link>
             </li>
           </ul>
         </div>
