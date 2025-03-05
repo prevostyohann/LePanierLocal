@@ -4,19 +4,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
 const CardTrader = () => {
-    const [traders, setTraders] = useState([]);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [traders, setTraders] = useState([]); // Stocke les traders
+    const [errorMessage, setErrorMessage] = useState(''); // Gère les erreurs
 
-    useEffect(() => {
-        const fetchTraders = async () => {
-            try {
-                const response = await axios.get('http://localhost:8000/api/traders');
-                setTraders(response.data);
-            } catch (error) {
-                setErrorMessage('Erreur lors du chargement des traders.');
+    // Fonction pour récupérer les traders
+    const fetchTraders = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/api/traders');
+            console.log("Données reçues :", response.data); // Debug
+    
+            if (Array.isArray(response.data.member)) {
+                setTraders(response.data.member);
+            } else {
+                throw new Error("Format de réponse inattendu");
             }
-        };
-
+        } catch (error) {
+            console.error("Erreur API :", error);
+            setErrorMessage('Erreur lors du chargement des traders.');
+        }
+    };
+    
+    
+    // Charger les traders au montage du composant
+    useEffect(() => {
         fetchTraders();
     }, []);
 
@@ -24,7 +34,7 @@ const CardTrader = () => {
         <div className="container">
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <div className="row">
-                {traders.map(trader => (
+                {Array.isArray(traders) && traders.map(trader => (
                     <div className="col-md-4" key={trader.id}>
                         <div className="card" style={{ width: '18rem' }}>
                             <div className="card-body">
