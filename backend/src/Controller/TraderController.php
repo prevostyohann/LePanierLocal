@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Trader;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TraderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -54,10 +55,12 @@ class TraderController extends AbstractController
     }
 
     #[Route('/api/traders', name: 'trader_list', methods: ['GET'])]
-    public function getTraders(): JsonResponse
+    public function getTraders(TraderRepository $traderRepository): JsonResponse
     {
-        $traders = $this->entityManager->getRepository(Trader::class)->findAll();
+        // Récupérer tous les traders depuis le repository
+        $traders = $traderRepository->findAll();
 
+        // Transformer en tableau de données
         $tradersArray = [];
         foreach ($traders as $trader) {
             $tradersArray[] = [
@@ -73,6 +76,7 @@ class TraderController extends AbstractController
             ];
         }
 
+        // Retourner la réponse JSON
         return new JsonResponse($tradersArray, JsonResponse::HTTP_OK);
     }
 }

@@ -23,6 +23,8 @@ class LoginController extends AbstractController
         // Récupération des données de la requête
         $data = json_decode($request->getContent(), true);
 
+        error_log('Donnée reçue du front : ' . print_r($data, true));
+
         // Vérification des paramètres requis dans la requête
         if (!isset($data['email'], $data['password'])) {
             return new JsonResponse(['error' => 'Missing parameters'], JsonResponse::HTTP_BAD_REQUEST);
@@ -49,6 +51,9 @@ class LoginController extends AbstractController
         // Générer un token unique pour l'utilisateur (ou commerçant)
         $token = bin2hex(random_bytes(32));
 
+        error_log('token envoyé : ' . print_r($token, true));
+
+
         // Si vous avez un champ pour stocker le token dans vos entités (User ou Trader)
         // Vous pouvez décommenter cette ligne si nécessaire :
         // $user->setApiToken($token);
@@ -61,7 +66,7 @@ class LoginController extends AbstractController
         return new JsonResponse([
             'token' => $token,
             'user_id' => $user->getId(),
-            'type' => ($user instanceof Trader) ? 'trader' : 'user' // Détermine si c'est un Trader ou User
+            'type' => ($user instanceof User) ? 'user' : 'trader'
         ], JsonResponse::HTTP_OK);
     }
 }

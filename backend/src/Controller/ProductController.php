@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
 use App\Entity\Trader;
+use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,52 +35,52 @@ final class ProductController extends AbstractController
     }
 
     #[Route('/new', name: 'app_product_new', methods: ['POST'])]
-public function new(Request $request, ValidatorInterface $validator): JsonResponse
-{
-    // Décoder les données JSON reçues de React
-    $obj = json_decode($request->getContent(), true);
+    public function new(Request $request, ValidatorInterface $validator): JsonResponse
+    {
+        // Décoder les données JSON reçues de React
+        $obj = json_decode($request->getContent(), true);
 
-    error_log('Données reçues du frontend : ' . print_r($obj, true));
+        error_log('Données reçues du frontend : ' . print_r($obj, true));
 
-    // Récupérer le trader_id depuis les données de la requête
-    $traderId = $obj['trader_id'] ?? null;
+        // Récupérer le trader_id depuis les données de la requête
+        $traderId = $obj['trader_id'] ?? null;
 
-    if (!$traderId) {
-        return new JsonResponse(['error' => 'Trader ID manquant.'], JsonResponse::HTTP_BAD_REQUEST);
-    }
-
-    // Récupérer le trader à partir de l'ID
-    $trader = $this->entityManager->getRepository(Trader::class)->find($traderId);
-
-    if (!$trader) {
-        return new JsonResponse(['error' => 'Trader non trouvé.'], JsonResponse::HTTP_NOT_FOUND);
-    }
-
-    // Créer un nouvel objet Product et y affecter les données
-    $product = new Product();
-    $product->setName($obj['name']);
-    $product->setDescription($obj['description']);
-    $product->setPrice($obj['price']);
-    $product->setTraderId($trader);
-
-    // Valider l'objet Product (avec le validateur Symfony)
-    $errors = $validator->validate($product);
-
-    // Si des erreurs de validation existent, les retourner dans la réponse
-    if (count($errors) > 0) {
-        $errorMessages = [];
-        foreach ($errors as $error) {
-            $errorMessages[] = $error->getMessage();
+        if (!$traderId) {
+            return new JsonResponse(['error' => 'Trader ID manquant.'], JsonResponse::HTTP_BAD_REQUEST);
         }
-        return new JsonResponse(['errors' => $errorMessages], JsonResponse::HTTP_BAD_REQUEST);
+
+        // Récupérer le trader à partir de l'ID
+        $trader = $this->entityManager->getRepository(Trader::class)->find($traderId);
+
+        if (!$trader) {
+            return new JsonResponse(['error' => 'Trader non trouvé.'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        // Créer un nouvel objet Product et y affecter les données
+        $product = new Product();
+        $product->setName($obj['name']);
+        $product->setDescription($obj['description']);
+        $product->setPrice($obj['price']);
+        $product->setTraderId($trader);
+
+        // Valider l'objet Product (avec le validateur Symfony)
+        $errors = $validator->validate($product);
+
+        // Si des erreurs de validation existent, les retourner dans la réponse
+        if (count($errors) > 0) {
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getMessage();
+            }
+            return new JsonResponse(['errors' => $errorMessages], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
+        // Si aucune erreur, enregistrer le produit en base de données
+        $this->entityManager->persist($product);
+        $this->entityManager->flush();
+
+        return new JsonResponse(['message' => 'Produit ajouté avec succès'], JsonResponse::HTTP_OK);
     }
-
-    // Si aucune erreur, enregistrer le produit en base de données
-    $this->entityManager->persist($product);
-    $this->entityManager->flush();
-
-    return new JsonResponse(['message' => 'Produit ajouté avec succès'], JsonResponse::HTTP_OK);
-}
 
     #[Route('/show', name: 'app_product_show', methods: ['GET'])]
     public function show(ProductRepository $productRepository): JsonResponse
