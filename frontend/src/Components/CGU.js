@@ -1,9 +1,13 @@
 import React from 'react';
+import NavForm from './NavForm';
+
 
 
 function CGU (){
     return (
+        
         <div>
+            <NavForm/>
             <h1>Conditions Générales d'Utilisation</h1>
             
             <p>
@@ -38,6 +42,7 @@ Les présentes CGU sont régies par le droit français. En cas de litige, les pa
 13. Contact
 Pour toute question ou réclamation concernant les présentes CGU, l'Utilisateur peut contacter la Plateforme à l'adresse suivante : Formulaire de contact cliquer ici 
            </p>
+           
         </div>
     )
 };
