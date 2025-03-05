@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import MyAppNav from './Nav';
+
  
 const Product = () => {
     const [products, setProducts] = useState([]);

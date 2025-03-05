@@ -14,9 +14,11 @@ import Message from './Components/Message';
 import Forum from './Components/Forum';
 import CGV from './Components/CGV';
 import CGU from './Components/CGU';
-//import Contact from './Components/Contact';
+import Contact from './Components/Contact';
 import ProfilTrader from './Components/ProfilTrader';
 import TraderShop from './Components/TraderShop';
+import MentionsLegales from './Components/MentionsLegales';
+
 
  
  
@@ -53,6 +55,11 @@ function App() {
         {/* <Route path="/Contact" element={<Contact/>} /> */}
         <Route path='ProfilTrader' element={<ProfilTrader/>} />
         <Route path='TraderShop' element={<TraderShop/>} />
+        <Route path="/Contact" element={<Contact/>} /> 
+        <Route path='/MentionsLegales' element={<MentionsLegales/>}/>
+        <Route path='/ProfilTrader' element={<ProfilTrader/>} />
+ 
+
       </Routes>
     </Router>
   );
