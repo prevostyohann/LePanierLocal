@@ -76,6 +76,11 @@ const MyForm = ({ fields, onSubmit }) => {
     } else {
       setErrors({});
       onSubmit(formData);
+      setFormData(fields.reduce((acc, field) => {
+        acc[field.name] = '';
+        return acc;
+      }, {}));
+      
     }
   };
 
