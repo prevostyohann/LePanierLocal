@@ -1,0 +1,12 @@
+/* Carrousel.css */
+
+.carousel-container {
+    max-width: 80%;          /* Limite la largeur du carrousel à 80% de la largeur de la fenêtre */
+    margin: 20px auto;       /* Centre le carrousel horizontalement et ajoute une marge verticale */
+    padding: 10px;      /* Ajoute un peu d'espace à l'intérieur du carrousel */
+  }
+  
+.carousel-item img {
+    object-fit: cover;       /* Permet de maintenir les proportions des images sans les déformer */
+    height: 400px;           /* Ajuste la hauteur des images (vous pouvez ajuster cela selon votre besoin) */
+  }
