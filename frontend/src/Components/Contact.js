@@ -1,5 +1,6 @@
 import React from 'react';
 import MyForm from './MyForm';
+import MyAppNav from './Nav';
 
 function Contact(){
     const fields = [ 
@@ -16,6 +17,7 @@ function Contact(){
             
         return ( 
             <div>
+                <MyAppNav />
                  <MyForm fields={fields} onSubmit={handleSubmit} />
                  </div>
         );
