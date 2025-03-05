@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
- 
 const Product = () => {
     const [products, setProducts] = useState([]);
-    const [userId, setUserId] = useState(''); // Assure-toi que l'ID de l'utilisateur est défini
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-    const [loading, setLoading] = useState(false);
- 
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -20,7 +17,7 @@ const Product = () => {
             fetchProducts();
         }
     }, []);
- 
+
     // Fonction pour récupérer les produits
     const fetchProducts = async () => {
         try {
@@ -30,14 +27,15 @@ const Product = () => {
             setErrorMessage('Erreur lors du chargement des produits.');
         }
     };
- 
+
     // Récupérer les produits au chargement du composant
     useEffect(() => {
         fetchProducts();
     }, []); // [] signifie que cette fonction ne sera appelée qu'une seule fois lors du montage du composant
- 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const traderId = localStorage.getItem('trader_id'); // Récupérer le trader_id depuis le localStorage
         try {
             const response = await axios.post(
                 'http://localhost:8000/product/new',
@@ -45,10 +43,12 @@ const Product = () => {
                     name: name,
                     description: description,
                     price: price,
+                    trader_id: traderId, // Inclure le trader_id dans les données envoyées
                 },
                 {
                     headers: {
                         'Content-Type': 'application/ld+json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
                     },
                 }
             );
@@ -65,7 +65,7 @@ const Product = () => {
             }
         }
     };
- 
+
     const handleDelete = async (productId) => {
         try {
             const response = await axios.delete(`http://localhost:8000/product/${productId}/delete`);
@@ -75,10 +75,11 @@ const Product = () => {
             setErrorMessage('Erreur lors de la suppression du produit.');
         }
     };
- 
+
     const handleEdit = async (e, productId) => {
         e.preventDefault();
- 
+        const traderId = localStorage.getItem('trader_id'); // Récupérer le trader_id depuis le localStorage
+
         try {
             const response = await axios.put(
                 `http://localhost:8000/product/${productId}/edit`,
@@ -86,10 +87,12 @@ const Product = () => {
                     name: name,
                     description: description,
                     price: price,
+                    trader_id: traderId, // Inclure le trader_id dans les données envoyées
                 },
                 {
                     headers: {
                         'Content-Type': 'application/ld+json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
                     },
                 }
             );
@@ -103,14 +106,14 @@ const Product = () => {
             }
         }
     };
- 
+
     const addToFavorites = async (productId) => {
         const token = localStorage.getItem('token');  // Récupère le token du localStorage
         if (!token) {
             setErrorMessage('Token non trouvé. Veuillez vous reconnecter.');
             return;
         }
-   
+
         try {
             const response = await axios.post(
                 'http://localhost:8000/favorite/add',  // URL de l'API pour ajouter aux favoris
@@ -134,13 +137,13 @@ const Product = () => {
             setTimeout(() => setErrorMessage(''), 5000);  // Affichage de l'erreur
         }
     };
- 
+
     return (
         <div>
             <h2>Liste des produits</h2>
- 
+
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
- 
+
             {products.length > 0 ? (
                 <ul>
                     {products.map((product) => (
@@ -157,7 +160,7 @@ const Product = () => {
             ) : (
                 <p>Aucun produit trouvé.</p>
             )}
- 
+
             <h2>Ajout produit</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -169,7 +172,7 @@ const Product = () => {
                         required
                     />
                 </div>
- 
+
                 <div>
                     <label>Description:</label>
                     <input
@@ -179,7 +182,7 @@ const Product = () => {
                         required
                     />
                 </div>
- 
+
                 <div>
                     <label>Prix:</label>
                     <input
@@ -189,7 +192,7 @@ const Product = () => {
                         required
                     />
                 </div>
- 
+
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                 {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
                 <button type="submit">Ajouter</button>
@@ -197,5 +200,5 @@ const Product = () => {
         </div>
     );
 };
- 
+
 export default Product;
