@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Trader;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,12 +14,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 
 #[Route('/product')]
 final class ProductController extends AbstractController
 {
+    private $entityManager;
+    private $tokenStorage;
+
+
     #[Route('/Product', name: 'app_product_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
@@ -32,6 +37,20 @@ final class ProductController extends AbstractController
     {
         // Décoder les données JSON reçues de React
         $obj = json_decode($request->getContent(), true);
+
+           // Récupérer le trader_id depuis les données de la requête
+    $traderId = $obj['trader_id'] ?? null;
+
+    if (!$traderId) {
+        return new JsonResponse(['error' => 'Trader ID manquant.'], JsonResponse::HTTP_BAD_REQUEST);
+    }
+
+    // Récupérer le trader à partir de l'ID
+    $trader = $this->entityManager->getRepository(Trader::class)->find($traderId);
+
+    if (!$trader) {
+        return new JsonResponse(['error' => 'Trader non trouvé.'], JsonResponse::HTTP_NOT_FOUND);
+    }
 
         error_log('Données reçues du frontend : ' . print_r($obj, true));
 

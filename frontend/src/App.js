@@ -18,6 +18,7 @@ import Contact from './Components/Contact';
 import ProfilTrader from './Components/ProfilTrader';
 import TraderShop from './Components/TraderShop';
 import MentionsLegales from './Components/MentionsLegales';
+import CardTrader from './Components/CardTrader';
 
 
  
@@ -58,7 +59,7 @@ function App() {
         <Route path="/Contact" element={<Contact/>} /> 
         <Route path='/MentionsLegales' element={<MentionsLegales/>}/>
         <Route path='/ProfilTrader' element={<ProfilTrader/>} />
- 
+        <Route path='/CardTrader' element={<CardTrader/>}/>
 
       </Routes>
     </Router>
