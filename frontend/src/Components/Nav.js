@@ -40,7 +40,7 @@ function MyAppNav() {
               <Link className="nav-link text-white" to="/About">A propos</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/m">Message</Link>
+              <Link className="nav-link text-white" to="/message">Message</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link text-white" to="/Favorite">Favoris</Link>

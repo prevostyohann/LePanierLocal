@@ -64,6 +64,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $profile_picture = null;
 
+    /**
+ *      @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user")
+ */
+    private Collection $messages;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -233,6 +238,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->profile_picture = $profile_picture;
 
         return $this;
+    }
+
+    public function __construct()
+    {
+    $this->messages = new ArrayCollection();
+    }
+
+    public function getMessages(): Collection
+    {
+    return $this->messages;
     }
 
    
