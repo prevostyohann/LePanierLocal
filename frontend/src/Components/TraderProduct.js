@@ -6,28 +6,28 @@ const Product = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [editingProductId, setEditingProductId] = useState(null); // ID du produit en édition
+    const [editedProduct, setEditedProduct] = useState({}); // Contient les modifications en cours
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        const traderId = localStorage.getItem('trader_id');  // Récupérer l'ID du trader
+        const traderId = localStorage.getItem('trader_id');
 
-        // Vérification de la validité de traderId
         if (!token || !traderId || isNaN(parseInt(traderId))) {
-            window.location.href = '/login';  // Rediriger si pas de token ou trader_id invalide
+            window.location.href = '/login';  
         } else {
-            fetchProducts(traderId);  // Passer l'ID du trader à la fonction pour récupérer les produits
+            fetchProducts(); 
         }
-    }, []);  // Cette fonction ne sera appelée qu'une seule fois lors du montage du composant
+    }, []);
 
-    // Fonction pour récupérer les produits du trader
     const fetchProducts = async () => {
         const traderId = localStorage.getItem('trader_id');
     
         if (!traderId || isNaN(parseInt(traderId, 10))) {
             console.error("Erreur : traderId invalide", traderId);
-            return; // Ne pas envoyer la requête si l'ID du trader est invalide
+            return;
         }
     
         try {
@@ -37,18 +37,18 @@ const Product = () => {
             setErrorMessage('Erreur lors du chargement des produits.');
         }
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const traderId = localStorage.getItem('trader_id'); // Récupérer le trader_id depuis le localStorage
+        const traderId = localStorage.getItem('trader_id'); 
         try {
             const response = await axios.post(
                 'http://localhost:8000/product/new',
                 {
-                    name: name,
-                    description: description,
-                    price: price,
-                    trader_id: traderId, // Inclure le trader_id dans les données envoyées
+                    name,
+                    description,
+                    price,
+                    trader_id: traderId, 
                 },
                 {
                     headers: {
@@ -61,13 +61,9 @@ const Product = () => {
             setName('');
             setDescription('');
             setPrice('');
-            fetchProducts(traderId); // Rafraîchir la liste des produits après ajout
+            fetchProducts(); 
         } catch (error) {
-            if (error.response && error.response.data.errors) {
-                setErrorMessage(error.response.data.errors.join(', '));
-            } else {
-                setErrorMessage('Une erreur est survenue lors de l\'ajout du produit.');
-            }
+            setErrorMessage("Erreur lors de l'ajout du produit.");
         }
     };
 
@@ -75,31 +71,41 @@ const Product = () => {
         const traderId = localStorage.getItem('trader_id');
     
         try {
-            const response = await axios.delete(`http://localhost:8000/product/${productId}/delete`, {
+            await axios.delete(`http://localhost:8000/product/${productId}/delete`, {
                 headers: { "Content-Type": "application/json" },
-                data: JSON.stringify({ trader_id: traderId }) // Envoie l'ID du trader
+                data: JSON.stringify({ trader_id: traderId }) 
             });
     
             setSuccessMessage('Produit supprimé avec succès');
-            fetchProducts(); // Rafraîchir la liste des produits immédiatement
+            fetchProducts();
         } catch (error) {
             setErrorMessage('Erreur lors de la suppression du produit.');
         }
     };
-    
+
+    const startEditing = (product) => {
+        setEditingProductId(product.id); 
+        setEditedProduct({
+            name: product.name,
+            description: product.description,
+            price: product.price,
+        });
+    };
+
+    const handleEditChange = (e) => {
+        setEditedProduct({ ...editedProduct, [e.target.name]: e.target.value });
+    };
 
     const handleEdit = async (e, productId) => {
         e.preventDefault();
-        const traderId = localStorage.getItem('trader_id'); // Récupérer le trader_id depuis le localStorage
+        const traderId = localStorage.getItem('trader_id'); 
 
         try {
             const response = await axios.put(
                 `http://localhost:8000/product/${productId}/edit`,
                 {
-                    name: name,
-                    description: description,
-                    price: price,
-                    trader_id: traderId, // Inclure le trader_id dans les données envoyées
+                    ...editedProduct,
+                    trader_id: traderId, 
                 },
                 {
                     headers: {
@@ -109,45 +115,10 @@ const Product = () => {
                 }
             );
             setSuccessMessage(response.data.message);
-            fetchProducts(traderId); // Rafraîchir la liste des produits après modification
+            setEditingProductId(null);
+            fetchProducts(); 
         } catch (error) {
-            if (error.response && error.response.data.errors) {
-                setErrorMessage(error.response.data.errors.join(', '));
-            } else {
-                setErrorMessage('Une erreur est survenue lors de la modification.');
-            }
-        }
-    };
-
-    const addToFavorites = async (productId) => {
-        const token = localStorage.getItem('token');  // Récupère le token du localStorage
-        if (!token) {
-            setErrorMessage('Token non trouvé. Veuillez vous reconnecter.');
-            return;
-        }
-
-        try {
-            const response = await axios.post(
-                'http://localhost:8000/favorite/add',  // URL de l'API pour ajouter aux favoris
-                { productId },  // Corps de la requête avec l'ID du produit
-                {
-                    headers: {
-                        'Content-Type': 'application/json',  // Définir le type de contenu en JSON
-                        'X-API-TOKEN': token,  // Envoi du token dans l'en-tête X-API-TOKEN
-                    },
-                }
-            );
-            setSuccessMessage('Produit ajouté aux favoris !');
-            setTimeout(() => setSuccessMessage(''), 5000); // Message de succès
-            const traderId = localStorage.getItem('trader_id');
-            fetchProducts(traderId);  // Rafraîchir la liste des produits
-        } catch (error) {
-            if (error.response) {
-                setErrorMessage(error.response.data.error || 'Erreur lors de l\'ajout aux favoris');
-            } else {
-                setErrorMessage('Une erreur est survenue.');
-            }
-            setTimeout(() => setErrorMessage(''), 5000);  // Affichage de l'erreur
+            setErrorMessage("Erreur lors de la modification.");
         }
     };
 
@@ -161,13 +132,39 @@ const Product = () => {
                 <ul>
                     {products.map((product) => (
                         <li key={product.id}>
-                            <h3>{product.name}</h3>
-                            <p>{product.description}</p>
-                            <p>Prix: {product.price} €</p>
-                            <button onClick={(e) => handleEdit(e, product.id)}>Modifier</button>
-                            <button onClick={() => handleDelete(product.id)}>Supprimer</button>
-{/*                             <button onClick={() => addToFavorites(product.id)}>Ajouter aux favoris</button>
- */}                        </li>
+                            {editingProductId === product.id ? (
+                                <div>
+                                    <input 
+                                        type="text" 
+                                        name="name" 
+                                        value={editedProduct.name} 
+                                        onChange={handleEditChange} 
+                                    />
+                                    <input 
+                                        type="text" 
+                                        name="description" 
+                                        value={editedProduct.description} 
+                                        onChange={handleEditChange} 
+                                    />
+                                    <input 
+                                        type="number" 
+                                        name="price" 
+                                        value={editedProduct.price} 
+                                        onChange={handleEditChange} 
+                                    />
+                                    <button onClick={(e) => handleEdit(e, product.id)}>Enregistrer</button>
+                                    <button onClick={() => setEditingProductId(null)}>Annuler</button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <h3>{product.name}</h3>
+                                    <p>{product.description}</p>
+                                    <p>Prix: {product.price} €</p>
+                                    <button onClick={() => startEditing(product)}>Modifier</button>
+                                    <button onClick={() => handleDelete(product.id)}>Supprimer</button>
+                                </div>
+                            )}
+                        </li>
                     ))}
                 </ul>
             ) : (
