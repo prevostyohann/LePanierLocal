@@ -1,12 +1,40 @@
-/* Carrousel.css */
+/* Appliquer le même fond que CardTrader */
+.carousel-wrapper {
+    background-color: #f9f9f9; /* Même couleur que le fond de CardTrader */
+    padding: 50px 0; /* Ajouter un espace pour l’aération */
+    display: flex;
+    justify-content: center;
+}
 
 .carousel-container {
-    max-width: 80%;          /* Limite la largeur du carrousel à 80% de la largeur de la fenêtre */
-    margin: 20px auto;       /* Centre le carrousel horizontalement et ajoute une marge verticale */
-    padding: 10px;      /* Ajoute un peu d'espace à l'intérieur du carrousel */
-  }
-  
+    max-width: 80%;
+    margin: auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+/* Ajustement des images */
 .carousel-item img {
-    object-fit: cover;       /* Permet de maintenir les proportions des images sans les déformer */
-    height: 400px;           /* Ajuste la hauteur des images (vous pouvez ajuster cela selon votre besoin) */
-  }
+    object-fit: cover;
+    height: 400px;
+    border-radius: 15px; /* Arrondi similaire aux cartes */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Ombre douce */
+}
+
+/* Harmonisation des titres */
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.carousel-caption h3 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.carousel-caption p {
+    color: white;
+    font-size: 1rem;
+}

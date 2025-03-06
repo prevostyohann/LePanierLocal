@@ -1,54 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import "../styles/CardTrader.css"; // Fichier CSS séparé pour un style propre
 
 const CardTrader = () => {
-    const [traders, setTraders] = useState([]); // Stocke les traders
-    const [errorMessage, setErrorMessage] = useState(''); // Gère les erreurs
+    const [traders, setTraders] = useState([]);
+    const [errorMessage, setErrorMessage] = useState("");
 
-    // Fonction pour récupérer les traders
-    const fetchTraders = async () => {
-        try {
-            const response = await axios.get('http://localhost:8000/api/traders');
-            console.log("Données reçues :", response.data); // Debug
-    
-            if (Array.isArray(response.data)) {
-                setTraders(response.data);
-            } else {
-                throw new Error("Format de réponse inattendu");
-            }
-        } catch (error) {
-            console.error("Erreur API :", error);
-            setErrorMessage('Erreur lors du chargement des traders.');
-        }
-    };
-    
-    // Charger les traders au montage du composant
     useEffect(() => {
+        const fetchTraders = async () => {
+            try {
+                const response = await axios.get("http://localhost:8000/api/traders");
+                if (Array.isArray(response.data.member)) {
+                    setTraders(response.data.member);
+                } else {
+                    throw new Error("Format de réponse inattendu");
+                }
+            } catch (error) {
+                console.error("Erreur API :", error);
+                setErrorMessage("Erreur lors du chargement des boutiques.");
+            }
+        };
+
         fetchTraders();
     }, []);
 
     return (
-        <div className="container">
-            <h2>Vos boutiques :</h2>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-            <div className="row">
+        <div className="trader-container">
+            <h2 className="title">🏪 Nos boutiques partenaires</h2>
+
+            {errorMessage && <p className="error">{errorMessage}</p>}
+
+            <div className="trader-grid">
                 {traders.length > 0 ? (
-                    traders.map(trader => (
-                        <div className="col-md-4" key={trader.id}>
-                            <div className="card" style={{ width: '18rem' }}>
-                                <div className="card-body">
-                                    <img src={trader.profile_picture || 'default_image_url'} alt="logo" className="card-img-top" />
-                                    <h5 className="card-title">{trader.name}</h5>
-                                    <p className="card-text">{trader.description || "Aucune description"}</p>
-                                    <Link to={`/trader/${trader.id}`} className="btn btn-primary">Visitez la boutique</Link>
-                                </div>
+                    traders.map((trader) => (
+                        <div className="trader-card" key={trader.id}>
+                            <div 
+                                className="trader-image"
+                                style={{
+                                    backgroundImage: `url(${trader.profile_picture || "default_image_url"})`,
+                                }}
+                            ></div>
+                            <div className="trader-info">
+                                <h3>{trader.name}</h3>
+                                <p>{trader.description || "Aucune description disponible."}</p>
+                                <Link to={`/trader/${trader.id}`} className="visit-btn">
+                                    Voir la boutique
+                                </Link>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <p>Aucun trader trouvé.</p>
+                    <p className="no-trader">Aucune boutique trouvée.</p>
                 )}
             </div>
         </div>

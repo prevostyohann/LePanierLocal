@@ -1,5 +1,7 @@
 <?php
 
+// src/Controller/ProductController.php
+
 namespace App\Controller;
 
 use App\Entity\Trader;
@@ -13,6 +15,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
+
+
 
 #[Route('/product')]
 final class ProductController extends AbstractController
@@ -35,7 +40,7 @@ final class ProductController extends AbstractController
     }
 
     #[Route('/new', name: 'app_product_new', methods: ['POST'])]
-    public function new(Request $request, ValidatorInterface $validator): JsonResponse
+    public function new(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
     {
         // Décoder les données JSON reçues de React
         $obj = json_decode($request->getContent(), true);
@@ -55,6 +60,7 @@ final class ProductController extends AbstractController
         if (!$trader) {
             return new JsonResponse(['error' => 'Trader non trouvé.'], JsonResponse::HTTP_NOT_FOUND);
         }
+
 
         // Créer un nouvel objet Product et y affecter les données
         $product = new Product();
@@ -76,39 +82,40 @@ final class ProductController extends AbstractController
         }
 
         // Si aucune erreur, enregistrer le produit en base de données
-        $this->entityManager->persist($product);
-        $this->entityManager->flush();
+        $entityManager->persist($product);
+        $entityManager->flush();
 
         return new JsonResponse(['message' => 'Produit ajouté avec succès'], JsonResponse::HTTP_OK);
     }
 
-    #[Route('/show', name: 'app_product_show', methods: ['GET'])]
-    public function show(ProductRepository $productRepository): JsonResponse
-    {
-        // Récupérer tous les produits depuis le repository
-        $products = $productRepository->findAll();
+    // #[Route('/show', name: 'app_product_show', methods: ['GET'])]
+    // public function show(ProductRepository $productRepository): JsonResponse
+    // {
+    //     // Récupérer tous les produits depuis le repository
+    //     $products = $productRepository->findAll();
     
-        // Retourner tous les produits en JSON
-        $productsArray = [];
-        foreach ($products as $product) {
-            $productsArray[] = [
-                'id' => $product->getId(),
-                'name' => $product->getName(),
-                'description' => $product->getDescription(),
-                'price' => $product->getPrice(),
-            ];
-        }
+    //     // Retourner tous les produits en JSON
+    //     $productsArray = [];
+    //     foreach ($products as $product) {
+    //         $productsArray[] = [
+    //             'id' => $product->getId(),
+    //             'name' => $product->getName(),
+    //             'description' => $product->getDescription(),
+    //             'price' => $product->getPrice(),
+    //         ];
+    //     }
     
-        return new JsonResponse($productsArray, JsonResponse::HTTP_OK);
-    }
+    //     return new JsonResponse($productsArray, JsonResponse::HTTP_OK);
+    // }
+    
 
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['PUT'])]
-    public function edit($id, Request $request, ValidatorInterface $validator): JsonResponse
+    public function edit($id, Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
     {
         error_log('Début de la requête pour l\'ID produit : ' . $id); // Log début de la requête
 
         // Récupérer le produit existant à partir de l'ID
-        $product = $this->entityManager->getRepository(Product::class)->find($id);
+        $product = $entityManager->getRepository(Product::class)->find($id);
         error_log('ID du produit : ' . $id);
 
         if (!$product) {
@@ -125,22 +132,12 @@ final class ProductController extends AbstractController
 
         $price = (int)$obj['price']; 
 
-        // Récupérer le trader connecté
-        $token = $this->tokenStorage->getToken();
-        $user = $token ? $token->getUser() : null;
-
-        error_log('Utilisateur connecté : ' . print_r($user, true));
-
-        if (!$user instanceof Trader) {
-            return new JsonResponse(['error' => 'Trader non trouvé.'], JsonResponse::HTTP_NOT_FOUND);
-        }
-
         // Mettre à jour les propriétés du produit avec les nouvelles données
         $product->setName($obj['name']);
         $product->setDescription($obj['description']);
         $product->setPrice($price); 
-        $product->setTraderId($user);
 
+        
         // Valider les nouvelles données
         $errors = $validator->validate($product);
 
@@ -153,40 +150,58 @@ final class ProductController extends AbstractController
         }
 
         // Sauvegarder les modifications en base de données
-        $this->entityManager->flush();
+        $entityManager->flush();
 
-        error_log('Données mises à jour: ' . print_r($obj, true));
+        error_log('Données mises a jours: ' . print_r($obj, true));
 
         return new JsonResponse(['message' => 'Produit mis à jour avec succès.'], JsonResponse::HTTP_OK);
     }
 
     #[Route('/{id}/delete', name: 'app_product_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Product $product): JsonResponse
+    public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): JsonResponse
     {
+        $data = json_decode($request->getContent(), true);
+        $traderId = $data['trader_id'] ?? null; // Récupérer l'ID du trader depuis la requête
+    
         if (!$product) {
             return new JsonResponse(['error' => 'Produit non trouvé.'], JsonResponse::HTTP_NOT_FOUND);
         }
     
-        // Supprimer le produit après validation du token CSRF LA VALIDATION DU TOKEN EST TEMPORAIREMENT DESACTIVEE
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->get('token')) === false) {
-            $this->entityManager->remove($product);
-            $this->entityManager->flush();
-            error_log('Données supprimées de la base de données: ' . print_r($product, true));
-            return new JsonResponse(['message' => 'Produit supprimé avec succès.'], JsonResponse::HTTP_OK);
-        } else {
-            return new JsonResponse(['error' => 'Token CSRF invalide.'], JsonResponse::HTTP_FORBIDDEN);
+        if (!$product->getTraderId()) {
+            return new JsonResponse(['error' => 'Ce produit n\'a pas de trader associé.'], JsonResponse::HTTP_BAD_REQUEST);
         }
+    
+        if ($product->getTraderId()->getId() !== (int)$traderId) {
+            return new JsonResponse(['error' => 'Vous n\'avez pas l\'autorisation de supprimer ce produit.'], JsonResponse::HTTP_FORBIDDEN);
+        }
+    
+        $entityManager->remove($product);
+        $entityManager->flush();
+    
+        return new JsonResponse(['message' => 'Produit supprimé avec succès.'], JsonResponse::HTTP_OK);
     }
-
-    #[Route('/products/trader/{trader_id}', name: 'show_trader_products', methods: ['GET'])]
+    
+    
+    
+    #[Route('/show/{trader_id}', name: 'app_product_show', methods: ['GET'])]
     public function showProduct(int $trader_id, ProductRepository $productRepository): JsonResponse
     {
         $products = $productRepository->findBy(['trader' => $trader_id]);
-
+    
         if (!$products) {
             return new JsonResponse(['message' => 'Aucun produit trouvé pour ce trader.'], 404);
         }
 
-        return $this->json($products, 200, [], ['groups' => 'product:read']);
+        $productsArray = [];
+        foreach ($products as $product) {
+            $productsArray[] = [
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'description' => $product->getDescription(),
+                'price' => $product->getPrice(),
+            ];
+        }
+    
+       return new JsonResponse($productsArray, 200);
     }
-}
+};

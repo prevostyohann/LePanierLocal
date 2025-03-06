@@ -8,7 +8,7 @@ import '../styles/Carrousel.css';
 
 const CarouselComponent = () => {
   return (
-    <div className="mx-auto my-4" style={{ maxWidth: '80%' }}>
+    <div className="mx-auto my-4" style={{ maxWidth: '80%', backgroundColor: '#f9f9f9' }}>
     <Carousel>
       <Carousel.Item>
         <img

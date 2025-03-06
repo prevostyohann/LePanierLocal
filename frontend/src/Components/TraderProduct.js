@@ -11,28 +11,33 @@ const Product = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (!token) {
-            window.location.href = '/login';
-        } else {
-            fetchProducts();
-        }
-    }, []);
+        const traderId = localStorage.getItem('trader_id');  // Récupérer l'ID du trader
 
-    // Fonction pour récupérer les produits
+        // Vérification de la validité de traderId
+        if (!token || !traderId || isNaN(parseInt(traderId))) {
+            window.location.href = '/login';  // Rediriger si pas de token ou trader_id invalide
+        } else {
+            fetchProducts(traderId);  // Passer l'ID du trader à la fonction pour récupérer les produits
+        }
+    }, []);  // Cette fonction ne sera appelée qu'une seule fois lors du montage du composant
+
+    // Fonction pour récupérer les produits du trader
     const fetchProducts = async () => {
+        const traderId = localStorage.getItem('trader_id');
+    
+        if (!traderId || isNaN(parseInt(traderId, 10))) {
+            console.error("Erreur : traderId invalide", traderId);
+            return; // Ne pas envoyer la requête si l'ID du trader est invalide
+        }
+    
         try {
-            const response = await axios.get('http://localhost:8000/product/show');
-            setProducts(response.data); // Met à jour la liste des produits
+            const response = await axios.get(`http://localhost:8000/product/show/${traderId}`);
+            setProducts(response.data);
         } catch (error) {
             setErrorMessage('Erreur lors du chargement des produits.');
         }
     };
-
-    // Récupérer les produits au chargement du composant
-    useEffect(() => {
-        fetchProducts();
-    }, []); // [] signifie que cette fonction ne sera appelée qu'une seule fois lors du montage du composant
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         const traderId = localStorage.getItem('trader_id'); // Récupérer le trader_id depuis le localStorage
@@ -56,25 +61,32 @@ const Product = () => {
             setName('');
             setDescription('');
             setPrice('');
-            fetchProducts(); // Rafraîchir la liste des produits après ajout
+            fetchProducts(traderId); // Rafraîchir la liste des produits après ajout
         } catch (error) {
             if (error.response && error.response.data.errors) {
                 setErrorMessage(error.response.data.errors.join(', '));
             } else {
-                setErrorMessage('An error occurred during registration.');
+                setErrorMessage('Une erreur est survenue lors de l\'ajout du produit.');
             }
         }
     };
 
     const handleDelete = async (productId) => {
+        const traderId = localStorage.getItem('trader_id');
+    
         try {
-            const response = await axios.delete(`http://localhost:8000/product/${productId}/delete`);
+            const response = await axios.delete(`http://localhost:8000/product/${productId}/delete`, {
+                headers: { "Content-Type": "application/json" },
+                data: JSON.stringify({ trader_id: traderId }) // Envoie l'ID du trader
+            });
+    
             setSuccessMessage('Produit supprimé avec succès');
-            fetchProducts(); // Rafraîchir la liste des produits après suppression
+            fetchProducts(); // Rafraîchir la liste des produits immédiatement
         } catch (error) {
             setErrorMessage('Erreur lors de la suppression du produit.');
         }
     };
+    
 
     const handleEdit = async (e, productId) => {
         e.preventDefault();
@@ -97,12 +109,12 @@ const Product = () => {
                 }
             );
             setSuccessMessage(response.data.message);
-            fetchProducts(); // Rafraîchir la liste des produits après modification
+            fetchProducts(traderId); // Rafraîchir la liste des produits après modification
         } catch (error) {
             if (error.response && error.response.data.errors) {
                 setErrorMessage(error.response.data.errors.join(', '));
             } else {
-                setErrorMessage('An error occurred during editing.');
+                setErrorMessage('Une erreur est survenue lors de la modification.');
             }
         }
     };
@@ -127,7 +139,8 @@ const Product = () => {
             );
             setSuccessMessage('Produit ajouté aux favoris !');
             setTimeout(() => setSuccessMessage(''), 5000); // Message de succès
-            fetchProducts();  // Rafraîchir la liste des produits
+            const traderId = localStorage.getItem('trader_id');
+            fetchProducts(traderId);  // Rafraîchir la liste des produits
         } catch (error) {
             if (error.response) {
                 setErrorMessage(error.response.data.error || 'Erreur lors de l\'ajout aux favoris');
@@ -153,8 +166,8 @@ const Product = () => {
                             <p>Prix: {product.price} €</p>
                             <button onClick={(e) => handleEdit(e, product.id)}>Modifier</button>
                             <button onClick={() => handleDelete(product.id)}>Supprimer</button>
-                            <button onClick={() => addToFavorites(product.id)}>Ajouter aux favoris</button>
-                        </li>
+{/*                             <button onClick={() => addToFavorites(product.id)}>Ajouter aux favoris</button>
+ */}                        </li>
                     ))}
                 </ul>
             ) : (
