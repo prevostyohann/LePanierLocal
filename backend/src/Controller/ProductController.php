@@ -205,3 +205,4 @@ final class ProductController extends AbstractController
        return new JsonResponse($productsArray, 200);
     }
 };
+

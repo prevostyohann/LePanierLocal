@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import MyAppNav from './Nav';
 
 const DetailsTrader = () => {
     const { id } = useParams();
     const [trader, setTrader] = useState(null);
     const [products, setProducts] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
         const fetchTraderDetails = async () => {
@@ -26,8 +28,40 @@ const DetailsTrader = () => {
         return <div>Loading...</div>;
     }
 
+    const addToFavorites = async (productId) => {
+        const user_id = localStorage.getItem('user_id');  
+        const token = localStorage.getItem('token');  
+    
+        if (!user_id || !token) {
+            setErrorMessage('Utilisateur non trouvé. Veuillez vous reconnecter.');
+            return;
+        }
+    
+        try {
+            const response = await axios.post(
+                'http://localhost:8000/favorite/add',  
+                { userId: user_id, productId },  // Envoi de l'ID utilisateur et du produit
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${token}`,  // Toujours envoyer le token
+                    },
+                }
+            );
+            setSuccessMessage('Produit ajouté aux favoris !');
+            setTimeout(() => setSuccessMessage(''), 5000);  
+        } catch (error) {
+            setErrorMessage(error.response?.data?.error || 'Une erreur est survenue.');
+            setTimeout(() => setErrorMessage(''), 5000);
+        }
+    };
+    
+
+
     return (
         <div>
+        <MyAppNav/>
+        <div>    
             <h1>{trader.name}</h1>
             <p>{trader.description}</p>
             <p>Email: {trader.email}</p>
@@ -45,9 +79,14 @@ const DetailsTrader = () => {
                         <h3>{product.name}</h3>
                         <p>{product.description}</p>
                         <p>Prix: {product.price} €</p>
+                        
+                        <button onClick={() => addToFavorites(product.id)}>Ajouter aux favoris</button>
                     </li>
                 ))}
             </ul>
+                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                </div>
         </div>
     );
 };

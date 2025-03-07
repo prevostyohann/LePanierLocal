@@ -5,7 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f9f9f9; /* Même couleur que CardTrader et CategoryCarousel */
+    color: #333; /* Couleur de texte équilibrée */
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

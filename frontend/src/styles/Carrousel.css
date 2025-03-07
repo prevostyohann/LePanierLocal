@@ -38,3 +38,7 @@
     color: white;
     font-size: 1rem;
 }
+
+body {
+    background-color: #f9f9f9; /* Même couleur que CardTrader et CategoryCarousel */
+}

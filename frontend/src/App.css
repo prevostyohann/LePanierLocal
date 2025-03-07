@@ -70,14 +70,8 @@
   z-index: 10; /* La navbar doit être au-dessus du reste du contenu */
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
-
-/* ---- APPLIQUER LA POLICE SUR TOUTE LA PAGE ---- */
 body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #f9f9f9; /* Même couleur que CardTrader et CategoryCarousel */
-    color: #333; /* Couleur de texte équilibrée */
+  background-color: #f9f9f9; /* Même couleur que CardTrader et CategoryCarousel */
 }
-
 
 
