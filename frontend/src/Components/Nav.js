@@ -6,9 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // après avoir fait npm install 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import image from '../image/logoLPL.png';
 import { FaShoppingCart } from "react-icons/fa";
+
+import LogoutButton from './LogoutButton'
  
  
 function MyAppNav() {
+ 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-custom">
       <div className="container-fluid">
@@ -70,13 +73,11 @@ function MyAppNav() {
             <li className="nav-item">
               <Link className="nav-link text-white" to="/Login">connexion</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/cart">
-                <FaShoppingCart size={24} />
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to='/ProfilTrader'>Profil</Link>
+              {user && <li className="nav-item"><Link className="nav-link text-white" to="/cart"><FaShoppingCart size={24} /></Link></li>}
+            
+              {trader && <li className="nav-item"><Link className="nav-link text-white" to="/ProfilTrader">Profil</Link></li>}
+            <li className="nav-link text-white" >
+             <LogoutButton/>
             </li>
           </ul>
         </div>
