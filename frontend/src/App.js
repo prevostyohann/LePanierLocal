@@ -17,6 +17,7 @@ import DetailsTrader from './Components/DetailsTrader';
 import TraderProduct from './Components/TraderProduct';
 import CardTrader from './Components/CardTrader';
 import './App.css';
+import Cart from './Components/Cart';
 
 function App() {
     const [userId, setUserId] = useState(null);
@@ -32,6 +33,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/Cart" element={<Cart />} />
                 <Route path="/About" element={<About />} />
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Register" element={<MyUserRegister />} />

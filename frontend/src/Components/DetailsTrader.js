@@ -55,6 +55,43 @@ const DetailsTrader = () => {
             setTimeout(() => setErrorMessage(''), 5000);
         }
     };
+
+
+    const addToCart = async (productId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const userId = localStorage.getItem('user_id');
+    
+            if (!token || !userId) {
+                setErrorMessage('Veuillez vous connecter pour ajouter au panier.');
+                return;
+            }
+    
+            const payload = { userId: parseInt(userId), productId: parseInt(productId) }; // 🔄 Correction
+    
+            console.log('Données envoyées:', payload);
+    
+            const response = await axios.post('http://localhost:8000/cart/add', 
+                payload, 
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'X-USER-ID': userId, // 🔄 Ajout de l'ID utilisateur dans les headers
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+    
+            console.log('Réponse du serveur:', response.data);
+            setSuccessMessage(response.data.message || 'Produit ajouté au panier.');
+            setTimeout(() => setSuccessMessage(''), 5000);
+        } catch (error) {
+            setErrorMessage(error.response?.data?.error || 'Erreur lors de l\'ajout au panier.');
+            console.error('Erreur lors de l\'ajout au panier:', error.response?.data);
+            setTimeout(() => setErrorMessage(''), 5000);
+        }
+    };
+    
     
 
 
@@ -81,6 +118,9 @@ const DetailsTrader = () => {
                         <p>Prix: {product.price} €</p>
                         
                         <button onClick={() => addToFavorites(product.id)}>Ajouter aux favoris</button>
+                        <button onClick={() => addToCart(product.id)}>🛒 Ajouter au panier</button>
+
+
                     </li>
                 ))}
             </ul>
