@@ -34,5 +34,5 @@ function MyFooter() {
       </nav>
     )
 }
-export default MyFooter
+export default MyFooter;
 
