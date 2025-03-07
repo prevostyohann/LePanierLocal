@@ -3,12 +3,16 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import MyAppNav from './Nav';
 
+
 const DetailsTrader = () => {
     const { id } = useParams();
+    //const [user, setUser] = useState(null);
     const [trader, setTrader] = useState(null);
     const [products, setProducts] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+
+   
 
     useEffect(() => {
         const fetchTraderDetails = async () => {
@@ -27,6 +31,7 @@ const DetailsTrader = () => {
     if (!trader) {
         return <div>Loading...</div>;
     }
+
 
     const addToFavorites = async (productId) => {
         const user_id = localStorage.getItem('user_id');  
@@ -107,6 +112,14 @@ const DetailsTrader = () => {
             <p>Hours of Operation: {trader.hours_of_operation}</p>
             <p>SIRET: {trader.siret}</p>
             <img src={trader.profile_picture} alt={`${trader.name}'s profile`} />
+
+            {/* Ajouter le composant SendMessage pour envoyer des messages */}
+            {/* {user && (
+                <SendMessage 
+                    recipientId={id} 
+                    senderId={user.id}  // Utilise user.id ici au lieu de `localStorage.getItem('userId')`
+                />
+            )} */}
 
             <h2>Products</h2>
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
