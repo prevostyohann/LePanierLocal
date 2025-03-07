@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import MyAppNav from './Nav';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import MyFooter from './Footer';
 
 const DetailsTrader = () => {
     const { id } = useParams();
     const [trader, setTrader] = useState(null);
     const [products, setProducts] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     useEffect(() => {
         const fetchTraderDetails = async () => {
@@ -29,36 +28,65 @@ const DetailsTrader = () => {
         return <div>Loading...</div>;
     }
 
+    const addToFavorites = async (productId) => {
+        const user_id = localStorage.getItem('user_id');  
+        const token = localStorage.getItem('token');  
+    
+        if (!user_id || !token) {
+            setErrorMessage('Utilisateur non trouvé. Veuillez vous reconnecter.');
+            return;
+        }
+    
+        try {
+            const response = await axios.post(
+                'http://localhost:8000/favorite/add',  
+                { userId: user_id, productId },  // Envoi de l'ID utilisateur et du produit
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${token}`,  // Toujours envoyer le token
+                    },
+                }
+            );
+            setSuccessMessage('Produit ajouté aux favoris !');
+            setTimeout(() => setSuccessMessage(''), 5000);  
+        } catch (error) {
+            setErrorMessage(error.response?.data?.error || 'Une erreur est survenue.');
+            setTimeout(() => setErrorMessage(''), 5000);
+        }
+    };
+    
+
+
     return (
         <div>
-            <MyAppNav />
-            <div className="container mt-4 text-center">
-                <h1 className="mb-4">{trader.name}</h1>
-                <p>{trader.description}</p>
-                <p>Email: {trader.email}</p>
-                <p>Phone: {trader.phone}</p>
-                <p>Address: {trader.address}</p>
-                <p>Hours of Operation: {trader.hours_of_operation}</p>
-                <p>SIRET: {trader.siret}</p>
-                <img src={trader.profile_picture} alt={`${trader.name}'s profile`} className="img-fluid rounded mb-4" />
+        <MyAppNav/>
+        <div>    
+            <h1>{trader.name}</h1>
+            <p>{trader.description}</p>
+            <p>Email: {trader.email}</p>
+            <p>Phone: {trader.phone}</p>
+            <p>Address: {trader.address}</p>
+            <p>Hours of Operation: {trader.hours_of_operation}</p>
+            <p>SIRET: {trader.siret}</p>
+            <img src={trader.profile_picture} alt={`${trader.name}'s profile`} />
 
-                <h2 className="mt-4">Products</h2>
-                {errorMessage && <p className="text-danger">{errorMessage}</p>}
-                <div className="row">
-                    {products.map(product => (
-                        <div key={product.id} className="col-md-4 mb-4">
-                            <div className="card h-100">
-                                <div className="card-body">
-                                    <h3 className="card-title">{product.name}</h3>
-                                    <p className="card-text">{product.description}</p>
-                                    <p className="card-text">Prix: {product.price} €</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+            <h2>Products</h2>
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            <ul>
+                {products.map(product => (
+                    <li key={product.id}>
+                        <h3>{product.name}</h3>
+                        <p>{product.description}</p>
+                        <p>Prix: {product.price} €</p>
+                        
+                        <button onClick={() => addToFavorites(product.id)}>Ajouter aux favoris</button>
+                    </li>
+                ))}
+            </ul>
+                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                 </div>
-            </div>
-            <MyFooter />
         </div>
     );
 };

@@ -14,7 +14,7 @@ class Favorite
     private ?int $id = null;
 
     #[ORM\ManyToOne]
-    private ?Trader $trader = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne]
     private ?Product $product = null;
@@ -24,14 +24,14 @@ class Favorite
         return $this->id;
     }
 
-    public function getTrader(): ?Trader
+    public function getUser(): ?User
     {
-        return $this->trader;
+        return $this->user;
     }
 
-    public function setTrader(?Trader $trader): static
+    public function setUser(?User $user): static
     {
-        $this->trader = $trader;
+        $this->user = $user;
 
         return $this;
     }

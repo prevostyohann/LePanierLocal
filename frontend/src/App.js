@@ -16,6 +16,7 @@ import MentionsLegales from './Components/MentionsLegales';
 import DetailsTrader from './Components/DetailsTrader';
 import TraderProduct from './Components/TraderProduct';
 import CardTrader from './Components/CardTrader';
+import './App.css';
 
 function App() {
     const [userId, setUserId] = useState(null);
