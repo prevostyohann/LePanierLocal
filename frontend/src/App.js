@@ -18,6 +18,7 @@ import TraderProduct from './Components/TraderProduct';
 import CardTrader from './Components/CardTrader';
 import './App.css';
 
+
 function App() {
     const [userId, setUserId] = useState(null);
 
@@ -29,6 +30,7 @@ function App() {
     }, []);
 
     return (
+        
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -47,8 +49,10 @@ function App() {
                 <Route path="/Contact" element={<Contact />} />
                 <Route path="/MentionsLegales" element={<MentionsLegales />} />
                 <Route path="/card-trader" element={<CardTrader />} />
+               
             </Routes>
         </Router>
+        
     );
 }
 

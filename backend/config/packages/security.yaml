@@ -24,6 +24,8 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api/messages/send, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/messages/conversation, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

@@ -3,3 +3,8 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+send_message:
+    path: /api/messages/send
+    controller: App\Controller\MessageController::sendMessage
+    methods: [POST]
