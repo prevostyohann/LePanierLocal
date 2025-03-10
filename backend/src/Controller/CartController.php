@@ -60,19 +60,27 @@ $existingCartProduct = $entityManager->getRepository(CartProduct::class)->findOn
     'product' => $product
 ]);
  
+// Vérifier si le produit est déjà dans le panier
+$existingCartProduct = $entityManager->getRepository(CartProduct::class)->findOneBy([
+    'cart' => $cart,
+    'product' => $product
+]);
+
 if ($existingCartProduct) {
-    // Si le produit existe déjà dans le panier, on augmente la quantité
-    $existingCartProduct->setQuantity($existingCartProduct->getQuantity() + 1);
+    // Si le produit existe déjà dans le panier, on augmente la quantité avec celle envoyée depuis le frontend
+    $newQuantity = $existingCartProduct->getQuantity() + $data['quantity']; // Utilise la quantité envoyée
+    $existingCartProduct->setQuantity($newQuantity);
     $entityManager->flush();
 } else {
-    // Sinon, on crée un nouvel enregistrement pour ce produit
+    // Sinon, on crée un nouvel enregistrement pour ce produit avec la quantité envoyée
     $cartProduct = new CartProduct();
     $cartProduct->setCart($cart);
     $cartProduct->setProduct($product); // Passer l'objet Product, pas l'ID
-    $cartProduct->setQuantity(1); // Quantité par défaut est 1
+    $cartProduct->setQuantity($data['quantity']); // Utilise la quantité envoyée
     $entityManager->persist($cartProduct);
     $entityManager->flush();
 }
+
  
 return new JsonResponse(['message' => 'Produit ajouté au panier.'], 201);
  

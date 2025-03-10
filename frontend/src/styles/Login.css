@@ -1,112 +1,166 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
-
+/* 🌍 Styles généraux */
 .login-page {
     font-family: 'Montserrat', sans-serif;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
-/* ---- HAUT : Image + Formulaire ---- */
-.login-top {
-    flex: 1;
-    background: url('../image/pexels-rachel-claire-4846209.jpg') center/cover no-repeat; /* Ajoute ton image ici */
+/* ---- NAVBAR ---- */
+nav {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- LAYOUT PRINCIPAL ---- */
+.login-content {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+    flex-direction: row;
+    height: calc(100vh - 70px);
+    width: 100%;
 }
 
+/* ---- 📝 Partie GAUCHE : Formulaire ---- */
 .login-container {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 40px; /* Plus grand */
-    border-radius: 10px;
-    width: 420px; /* Formulaire plus large */
-    color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    height: 100%;
 }
 
-.login-title {
-    font-size: 2rem; /* Plus grand */
+.login-box {
+    width: 90%;
+    max-width: 450px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.login-box h2 {
+    font-size: 2rem;
     font-weight: 600;
+    text-align: center;
     margin-bottom: 20px;
 }
 
-.form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.form-group label {
-    font-size: 0.95rem;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-.login-btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    font-weight: bold;
-    background-color: #7B0000;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-}
-
-.login-btn:hover {
-    background-color: #500000;
-}
-
-.forgot-password {
-    display: block;
-    margin-top: 10px;
-    font-size: 0.85rem;
-    color: white;
-    text-decoration: underline;
-    transition: 0.3s;
-}
-
-.forgot-password:hover {
-    color: #ffdddd;
-}
-
-/* ---- BAS : Texte + Fond Rouge ---- */
-.login-bottom {
-    height: 45vh;
-    background-color: #7B0000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-
-.login-bottom h1 {
-    font-size: 2.5rem;
-    font-weight: 600;
-}
-
-/* Messages d'erreur et de succès */
 .error-message {
-    color: #ff4d4d;
+    color: red;
+    text-align: center;
     font-size: 0.9rem;
+    margin-top: 10px;
 }
 
 .success-message {
-    color: #4caf50;
+    color: green;
+    text-align: center;
     font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+/* ---- 🎠 Partie DROITE : Carrousel ---- */
+.trader-carousel-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+    margin-top: -70px;
+}
+
+/* Colonne contenant un carrousel */
+.trader-carousel-column {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Liste d'éléments dans un carrousel */
+.trader-carousel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+/* Animation de défilement */
+.trader-carousel-column:nth-child(1) .trader-carousel-list,
+.trader-carousel-column:nth-child(3) .trader-carousel-list {
+    animation: traderScroll 45s linear infinite;
+}
+
+.trader-carousel-column:nth-child(2) .trader-carousel-list {
+    animation: traderScrollReverse 45s linear infinite;
+}
+
+/* 🎨 Style des cartes */
+.trader-carousel-card {
+    width: 90%;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    background-color: #f0f0f0;
+}
+
+.category-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* 👇 Animations de défilement */
+@keyframes traderScroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+}
+
+@keyframes traderScrollReverse {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+}
+
+/* ---- FOOTER ---- */
+.login-bottom {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 20px;
+    background: #222;
+    color: white;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+    .login-content {
+        flex-direction: column;
+    }
+    .trader-carousel-container {
+        height: auto;
+    }
 }

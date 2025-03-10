@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MyAppNav from './Nav';
+import "../styles/Favoris.css"; // Assure-toi que le fichier CSS est bien importé
 
 const Favoris = () => {
     const [favorites, setFavorites] = useState([]);
@@ -19,8 +20,6 @@ const Favoris = () => {
                     return;
                 }
 
-                console.log('UserID envoyé:', userId);
-
                 const response = await axios.get('http://localhost:8000/favorite/show', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -28,7 +27,6 @@ const Favoris = () => {
                     },
                 });
 
-                console.log('Favoris récupérés :', response.data);
                 setFavorites(response.data);
             } catch (error) {
                 setErrorMessage(error.response?.data?.message || 'Erreur lors du chargement des favoris.');
@@ -40,49 +38,62 @@ const Favoris = () => {
         fetchFavorites();
     }, []);
 
-   
     const handleDelete = async (favoriteId) => {
         try {
             const token = localStorage.getItem('token');
-            console.log("suppression du favori avec ID :", favoriteId);
-    
             await axios.delete(`http://localhost:8000/favorite/delete/${favoriteId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
             });
-    
+
             // Met à jour la liste des favoris sans celui supprimé
             setFavorites(favorites.filter(fav => fav.favoriteid !== favoriteId));
         } catch (error) {
             console.error('Erreur lors de la suppression du favori', error.response?.data || error);
         }
     };
-    
 
     return (
-        <div>
+        <div className="favoris-container">
             <MyAppNav />
-            <h2>Mes Favoris</h2>
+            <div className="favoris-header">
+                <h2 className="favoris-title">Mes Favoris</h2>
+                <div className="favoris-separator"></div> {/* Barre de séparation sous le titre */}
+            </div>
 
-            {loading && <p>Chargement des favoris...</p>}
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-            {!loading && !errorMessage && favorites.length > 0 ? (
-                <ul>
-    {favorites.map((favorite) => (
-        <li key={favorite.favoriteid}>
-            <h3>{favorite.name}</h3>
-            <p>{favorite.description}</p>
-            <p>Prix: {favorite.price} €</p>
-            <button onClick={() => handleDelete(favorite.favoriteid)}>🗑 Supprimer</button>
-        </li>
-    ))}
-</ul>
+            <div className="favoris-grid">
+                {loading ? (
+                    <p>Chargement des favoris...</p>
+                ) : favorites.length > 0 ? (
+                    favorites.map((favorite) => (
+                        <div className="favorite-card" key={favorite.favoriteid}>
+                            {/* Badge "Nouveau" ou autre option si nécessaire */}
+                            <div className="favorite-image">
+                                {/* Image du produit, à remplacer si disponible */}
+                                <img src={favorite.image || "default_image_url"} alt={favorite.name} />
+                            </div>
 
-            ) : (
-                !loading && <p>Aucun favori trouvé.</p>
-            )}
+                            <div className="favorite-info">
+                                <h3>{favorite.name}</h3>
+                                <p>{favorite.description || "Aucune description disponible."}</p>
+                                <p className="price">Prix: {favorite.price} €</p>
+
+                                <button 
+                                    className="delete-btn" 
+                                    onClick={() => handleDelete(favorite.favoriteid)}
+                                >
+                                    🗑 Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>Aucun favori trouvé.</p>
+                )}
+            </div>
         </div>
     );
 };
