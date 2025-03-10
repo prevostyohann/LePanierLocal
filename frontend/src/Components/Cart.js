@@ -14,20 +14,21 @@ const Cart = () => {
             try {
                 const token = localStorage.getItem('token');
                 const userId = localStorage.getItem('user_id');
-
+    
                 if (!token || !userId) {
                     setErrorMessage('Utilisateur non trouvé. Veuillez vous reconnecter.');
                     setLoading(false);
                     return;
                 }
-
+    
                 const response = await axios.get('http://localhost:8000/cart/show', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'X-USER-ID': userId,
                     },
                 });
-
+    
+                console.log("Données du panier:", response.data); // Vérifie la structure de la réponse
                 setCart(response.data);
             } catch (error) {
                 setErrorMessage(error.response?.data?.message || 'Erreur lors du chargement du panier.');
@@ -35,9 +36,10 @@ const Cart = () => {
                 setLoading(false);
             }
         };
-
+    
         fetchCart();
     }, []);
+    
 
     // ✅ Supprimer un produit du panier
     const handleDelete = async (cartId) => {
@@ -56,41 +58,56 @@ const Cart = () => {
         }
     };
 
-   // Fonction pour commander
-   const handleOrder = async () => {
+     // Fonction pour passer la commande
+     const handleOrder = async () => {
         try {
             const token = localStorage.getItem('token');
             const userId = localStorage.getItem('user_id');
-
-            // Vérifiez si vous avez un panier valide
-            const cartId = cart.length > 0 ? cart[0].cartid : null; // Vous prenez ici l'ID du premier panier
-
-            // Si vous voulez être sûr d'avoir un panier actif, vous pouvez choisir le panier en fonction de critères comme isActive
-            if (!cartId) {
+    
+            // Vérifier si le panier n'est pas vide
+            if (cart.length === 0) {
                 setErrorMessage('Panier vide ou non trouvé.');
                 return;
             }
-
-            console.log('id de panier :', cartId);
-            console.log('UserID envoyé:', userId);
-
+    
+            // Utiliser cart[0].cart_id pour récupérer l'ID du panier
+            const cartId = cart[0].cart_id;  // Notez l'usage de `cart_id` ici
+    
+            // Log des données envoyées pour déboguer
+            console.log('Données envoyées dans l\'API Order:');
+            console.log('Token:', token);
+            console.log('User ID:', userId);
+            console.log('Cart ID:', cartId); // Vérifie que cartId est bien l'ID du panier global
+    
+            // Vérifie que l'ID du panier est valide
+            if (!cartId) {
+                setErrorMessage('Cart ID non valide.');
+                return;
+            }
+    
             // Faire la requête pour ajouter la commande
             const response = await axios.post(`http://localhost:8000/order/Add`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'X-USER-ID': userId,
-                    'X-CART-ID': cartId, // Envoie l'ID du panier correspondant
+                    'X-CART-ID': cartId,  // Assure-toi d'envoyer le bon ID du panier
                 },
             });
-
-            console.log('Commande réussie :', response.data);
+    
+            // Log de la réponse de l'API
+            console.log('Réponse de l\'API:', response.data);
+    
+            // Réponse en cas de succès
             setSuccessMessage('Commande réussie.');
             setCart([]); // Vider le panier après la commande
+    
         } catch (error) {
+            // Log des erreurs en cas d'échec de la requête
             setErrorMessage(error.response?.data?.message || 'Erreur lors de la commande.');
             console.error('Erreur commande', error);
         }
     };
+    
 
     return (
         <div className="cart-container">

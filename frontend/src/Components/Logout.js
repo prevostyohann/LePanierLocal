@@ -11,7 +11,7 @@ const Logout = () => {
     localStorage.removeItem('trader_id');
    
     setTimeout(() => {
-      navigate('/'); // Redirige vers la page d'accueil après la déconnexion
+      navigate('/Login'); // Redirige vers la page d'accueil après la déconnexion
     }, 100); // 100 millisecondes devraient suffire
   };
  

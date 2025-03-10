@@ -95,9 +95,11 @@ function MyAppNav() {
                   Profil Commerçant
                 </Link>
               </li>}
-            <li className="nav-link text-white" >
-             <Logout/>
-            </li>
+              {(isTrader || isUser) && (
+              <li className="nav-link text-white">
+                <Logout />
+              </li>
+            )}
           </ul>
         </div>
       </div>

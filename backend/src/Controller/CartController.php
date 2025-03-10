@@ -111,7 +111,8 @@ return new JsonResponse(['message' => 'Produit ajouté au panier.'], 201);
     foreach ($cartProducts as $cartProduct) {
         $product = $cartProduct->getProduct();
         $cartArray[] = [
-            'cartid' => $cartProduct->getId(),
+            'cart_id' => $cart->getId(), // ID du panier global
+            'cart_product_id' => $cartProduct->getId(), // ID du produit dans le panier
             'product_id' => $product->getId(),
             'name' => $product->getName(),
             'description' => $product->getDescription(),

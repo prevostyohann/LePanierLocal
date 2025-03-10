@@ -2,8 +2,9 @@
 
 namespace App\Config;
 
-enum OrderStatus: string {
-    case Pending = 'pending';
-    case Shipped = 'shipped';
-    case Delivered = 'delivered';
+enum OrderStatus: string
+{
+    case PENDING = 'pending';
+    case COMPLETED = 'completed';
+    case CANCELLED = 'cancelled';
 }
