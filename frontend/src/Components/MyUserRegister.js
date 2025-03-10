@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import MyForm from './MyForm';
 import NavForm from './NavForm';
+import { useNavigate } from 'react-router-dom';
+
 
 const Register = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
+  
 
   // Définir les champs pour l'utilisateur
   const fields = [
@@ -37,6 +41,7 @@ const Register = () => {
         }
       );
       setSuccessMessage(response.data.message);
+      navigate('/Login');
       setErrorMessage('');
     } catch (error) {
       if (error.response && error.response.data.errors) {

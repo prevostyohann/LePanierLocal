@@ -6,7 +6,7 @@ import Login from './Components/Login';
 import Favorite from './Components/Favorite';
 import MyTraderRegister from './Components/MyTraderRegister';
 import MyUserRegister from './Components/MyUserRegister';
-import Message from './Components/Message';
+//import Message from './Components/Message';
 import Forum from './Components/Forum';
 import CGV from './Components/CGV';
 import CGU from './Components/CGU';
@@ -18,18 +18,20 @@ import TraderProduct from './Components/TraderProduct';
 import CardTrader from './Components/CardTrader';
 import './App.css';
 import Cart from './Components/Cart';
-
+ 
+ 
 function App() {
     const [userId, setUserId] = useState(null);
-
+ 
     useEffect(() => {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId) {
             setUserId(storedUserId);
         }
     }, []);
-
+ 
     return (
+       
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -39,7 +41,7 @@ function App() {
                 <Route path="/Register" element={<MyUserRegister />} />
                 <Route path="/registerTrader" element={<MyTraderRegister />} />
                 <Route path="/Favorite" element={<Favorite />} />
-                <Route path="/Message" element={<Message />} />
+                {/* <Route path="/Message" element={<Message />} /> */}
                 <Route path="/Forum" element={<Forum />} />
                 <Route path="/TraderProduct" element={<TraderProduct />} />
                 <Route path="/ProfilTrader" element={<ProfilTrader />} />
@@ -49,9 +51,11 @@ function App() {
                 <Route path="/Contact" element={<Contact />} />
                 <Route path="/MentionsLegales" element={<MentionsLegales />} />
                 <Route path="/card-trader" element={<CardTrader />} />
+               
             </Routes>
         </Router>
+       
     );
 }
-
+ 
 export default App;

@@ -8,6 +8,7 @@
   pointer-events: none;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -67,6 +68,7 @@
   top: 0;
   left: 0;
   right: 0;
+  font-family: 'Montserrat', sans-serif;
   z-index: 10; /* La navbar doit être au-dessus du reste du contenu */
 }
 

@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController
 {
-    #[Route('/categories', name: 'categories')]
+    #[Route('api/categories', name: 'categories')]
     public function getCategories(CategoryRepository $categoryRepository): JsonResponse
     {
         $categories = $categoryRepository->findAll();

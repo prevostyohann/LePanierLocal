@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+.login-page {
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---- HAUT : Image + Formulaire ---- */
+.login-top {
+    flex: 1;
+    background: url('../image/pexels-rachel-claire-4846209.jpg') center/cover no-repeat; /* Ajoute ton image ici */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.login-container {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 40px; /* Plus grand */
+    border-radius: 10px;
+    width: 420px; /* Formulaire plus large */
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.login-title {
+    font-size: 2rem; /* Plus grand */
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #7B0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.login-btn:hover {
+    background-color: #500000;
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: white;
+    text-decoration: underline;
+    transition: 0.3s;
+}
+
+.forgot-password:hover {
+    color: #ffdddd;
+}
+
+/* ---- BAS : Texte + Fond Rouge ---- */
+.login-bottom {
+    height: 45vh;
+    background-color: #7B0000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.login-bottom h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+/* Messages d'erreur et de succès */
+.error-message {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+}
+
+.success-message {
+    color: #4caf50;
+    font-size: 0.9rem;
+}

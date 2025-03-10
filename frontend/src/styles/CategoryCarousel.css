@@ -1,26 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
 /* ---- CONTAINER GLOBAL ---- */
 .category-carousel-wrapper {
-    width: 100%;
-    background: #f9f9f9; /* Même couleur que CardTrader */
-    padding: 30px 0;
+    width: 86%;
+    margin: 0 auto;
+    background: #f9f9f9;
+    padding: 50px 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.category-carousel {
+/* ---- BARRE SÉPARATRICE ---- */
+.separator {
     width: 80%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #7B0000, transparent);
+    margin: 15px auto;
+    border-radius: 1px;
+}
+
+/* ---- TITRE ---- */
+.category-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+    color: #222;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ---- CONTAINER CAROUSEL ---- */
+.category-carousel {
+    width: 95%;
     overflow: hidden;
     position: relative;
 }
 
-/* ---- CONTAINER DES CARTES ---- */
+/* ---- CARDS CONTAINER ---- */
 .category-carousel-container {
     display: flex;
     width: max-content;
     gap: 20px;
-    animation: scroll 12s linear infinite; /* Vitesse réduite */
+    animation: scroll 20s linear infinite;
 }
 
 /* ---- STYLE DES CARTES ---- */
@@ -29,15 +54,30 @@
     width: 200px;
     height: 250px;
     border-radius: 15px;
-    background-color: #fffcfc; /* Harmonisé avec CardTrader */
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    
+    /* ---- Couleurs harmonieuses avec la navbar ---- */
+    background-color: var(--card-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* ---- Appliquer des couleurs en boucle ---- */
+.category-card:nth-child(10n+1) { background-color: #8B0000; } /* Bordeaux foncé */
+.category-card:nth-child(10n+2) { background-color: #A32222; } /* Rouge intense */
+.category-card:nth-child(10n+3) { background-color: #D96666; } /* Terracotta */
+.category-card:nth-child(10n+4) { background-color: #B85628; } /* Ocre foncé */
+.category-card:nth-child(10n+5) { background-color: #E0A96D; } /* Beige doré */
+.category-card:nth-child(10n+6) { background-color: #2C3E50; } /* Bleu nuit */
+.category-card:nth-child(10n+7) { background-color: #2F5D50; } /* Vert profond */
+.category-card:nth-child(10n+8) { background-color: #4A4A4A; } /* Gris anthracite */
+.category-card:nth-child(10n+9) { background-color: #5D2E46; } /* Violet profond */
+.category-card:nth-child(10n+10) { background-color: #FF6B35; } /* Orange chaud */
 
 .category-card:hover {
     transform: scale(1.05);
@@ -52,6 +92,10 @@
     background-position: center;
     filter: brightness(0.85);
     transition: filter 0.3s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
 }
 
 .category-card:hover .category-image {
@@ -60,14 +104,11 @@
 
 /* ---- NOM DE LA CATÉGORIE ---- */
 .category-name {
-    font-family: 'Poppins', sans-serif;
     font-size: 1.3rem;
     font-weight: 600;
-    color: rgb(255, 255, 255);
-    background: rgba(0, 0, 0, 0.733);
-    padding: 10px;
-    border-radius: 8px;
-    text-transform: capitalize; /* Meilleure lisibilité */
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-transform: capitalize;
     letter-spacing: 0.5px;
     position: absolute;
     bottom: 10px;
@@ -75,13 +116,8 @@
     transform: translateX(-50%);
     text-align: center;
     width: 85%;
-}
-
-/* ---- LIEN ---- */
-.category-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Meilleure lisibilité */
 }
 
 /* ---- ANIMATION DU DÉFILEMENT ---- */
@@ -100,4 +136,17 @@
     .category-name {
         font-size: 1.1rem;
     }
+
+}
+
+/* ---- ICÔNE AU CENTRE DES CARTES ---- */
+.carousel-category-icon {
+    font-size: 3rem; /* Taille plus grande */
+    color: white !important;  /* Forcer la couleur en blanc */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
