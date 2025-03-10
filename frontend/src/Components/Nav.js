@@ -7,7 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import image from '../image/logoLPL.png';
 import { FaShoppingCart } from "react-icons/fa";
 
-import LogoutButton from './LogoutButton'
+//import LogoutButton from './LogoutButton'
  
  
 function MyAppNav() {
@@ -73,12 +73,12 @@ function MyAppNav() {
             <li className="nav-item">
               <Link className="nav-link text-white" to="/Login">connexion</Link>
             </li>
-              {user && <li className="nav-item"><Link className="nav-link text-white" to="/cart"><FaShoppingCart size={24} /></Link></li>}
+              {/* {{user && <li className="nav-item"><Link className="nav-link text-white" to="/cart"><FaShoppingCart size={24} /></Link></li>}
             
               {trader && <li className="nav-item"><Link className="nav-link text-white" to="/ProfilTrader">Profil</Link></li>}
             <li className="nav-link text-white" >
-             <LogoutButton/>
-            </li>
+             <LogoutButton/>}
+            </li> */}
           </ul>
         </div>
       </div>

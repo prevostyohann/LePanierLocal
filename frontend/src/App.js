@@ -6,7 +6,7 @@ import Login from './Components/Login';
 import Favorite from './Components/Favorite';
 import MyTraderRegister from './Components/MyTraderRegister';
 import MyUserRegister from './Components/MyUserRegister';
-import Message from './Components/Message';
+//import Message from './Components/Message';
 import Forum from './Components/Forum';
 import CGV from './Components/CGV';
 import CGU from './Components/CGU';
@@ -41,7 +41,7 @@ function App() {
                 <Route path="/Register" element={<MyUserRegister />} />
                 <Route path="/registerTrader" element={<MyTraderRegister />} />
                 <Route path="/Favorite" element={<Favorite />} />
-                <Route path="/Message" element={<Message />} />
+                {/* <Route path="/Message" element={<Message />} /> */}
                 <Route path="/Forum" element={<Forum />} />
                 <Route path="/TraderProduct" element={<TraderProduct />} />
                 <Route path="/ProfilTrader" element={<ProfilTrader />} />

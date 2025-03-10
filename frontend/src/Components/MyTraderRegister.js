@@ -22,6 +22,8 @@ const MyTraderRegister = () => {
     { name: 'password', label: 'Mot de Passe : ', type: 'password', placeholder: 'Écrire votre mot de passe', required: true },
     { name: 'confirm-password', label: 'Confirmer le Mot de Passe : ', type: 'password', placeholder: 'Retapez votre mot de passe', required: true },
     { name: 'description', label: 'Description : ', type: 'text', placeholder: 'Décrivez votre boutique', required: true },
+    { name: 'category', label: 'Catégorie : ', type: 'select', apiEndpoint: '/api/categories', required: false },
+    { name: 'sub_category', label: 'Sous Catégorie : ', type: 'select', apiEndpoint: '/api/subcategories', required: false },
   ];
 
   // Fonction de soumission
@@ -43,6 +45,8 @@ const MyTraderRegister = () => {
           email: data.email,
           description: data.description,
           plainPassword: data.password,
+          category: data.category,
+          sub_category: data.sub_category,
         },
         {
           headers: {
@@ -59,7 +63,9 @@ const MyTraderRegister = () => {
         email: '',
         password: '',
         'confirm-password': '',
-        description: ''
+        description: '',
+        category: '',
+        sub_category: ''
       });
     } catch (error) {
       if (error.response && error.response.data.errors) {
