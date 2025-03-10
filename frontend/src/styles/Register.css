@@ -63,11 +63,11 @@ nav {
 /* Animation de défilement */
 .trader-carousel-column:nth-child(1) .trader-carousel-list,
 .trader-carousel-column:nth-child(3) .trader-carousel-list {
-    animation: traderScroll 30s linear infinite;
+    animation: traderScroll 45s linear infinite;
 }
 
 .trader-carousel-column:nth-child(2) .trader-carousel-list {
-    animation: traderScrollReverse 30s linear infinite;
+    animation: traderScrollReverse 45s linear infinite;
 }
 
 /* 🎨 Style des cartes */
