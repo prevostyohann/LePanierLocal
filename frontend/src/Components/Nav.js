@@ -53,9 +53,11 @@ function MyAppNav() {
             <li className="nav-item">
               <Link className="nav-link text-white" to="/message">Message</Link>
             </li>
+            {isUser &&
             <li className="nav-item">
               <Link className="nav-link text-white" to="/Favorite">Favoris</Link>
             </li>
+            }
             <li className="nav-item">
               <Link className="nav-link text-white" to="/forum">Forum</Link>
             </li>

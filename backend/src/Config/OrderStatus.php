@@ -2,9 +2,19 @@
 
 namespace App\Config;
 
-enum OrderStatus: string
+class OrderStatus
 {
-    case PENDING = 'pending';
-    case COMPLETED = 'completed';
-    case CANCELLED = 'cancelled';
+    const PENDING = 'pending';   // Commande en attente
+    const COMPLETED = 'completed';  // Commande terminée
+    const ARCHIVED = 'archived';   // Commande archivée
+
+    // Retourne tous les statuts possibles
+    public static function getAllStatuses(): array
+    {
+        return [
+            self::PENDING,
+            self::COMPLETED,
+            self::ARCHIVED
+        ];
+    }
 }

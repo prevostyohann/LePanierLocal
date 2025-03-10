@@ -13,6 +13,10 @@ class CartProduct
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'cartProducts')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Order $order = null;
  
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -69,5 +73,17 @@ class CartProduct
  
     return $this;
 }
+
+    public function getOrder(): ?Order
+    {
+        return $this->order;
+    }
+
+    public function setOrder(?Order $order): self
+    {
+        $this->order = $order;
+
+        return $this;
+    }
 }
  

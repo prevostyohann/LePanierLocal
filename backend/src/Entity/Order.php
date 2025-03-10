@@ -1,7 +1,5 @@
 <?php
 
-// src/Entity/Order.php
-
 namespace App\Entity;
 
 use App\Config\OrderStatus;
@@ -33,11 +31,11 @@ class Order
     #[ORM\Column]
     private ?int $order_number = null;
 
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(type: 'integer')]
     private ?int $total_amount = null;
 
-    #[ORM\Column(enumType: OrderStatus::class)]
-    private ?OrderStatus $status = null;
+    #[ORM\Column(type: 'string', length: 20)]  // Utilisation de type string
+    private ?string $status = null;
 
     // Getters et setters pour l'utilisateur
 
@@ -108,13 +106,18 @@ class Order
         return $this;
     }
 
-    public function getStatus(): ?OrderStatus
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(OrderStatus $status): static
+    public function setStatus(string $status): static
     {
+        // Tu peux ajouter une vérification ici pour être sûr que l'on utilise une valeur valide
+        if (!in_array($status, OrderStatus::getAllStatuses())) {
+            throw new \InvalidArgumentException('Statut de commande invalide');
+        }
+
         $this->status = $status;
 
         return $this;
