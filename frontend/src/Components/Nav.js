@@ -54,6 +54,11 @@ function MyAppNav() {
               <Link className="nav-link text-white" to="/message">Message</Link>
             </li>
             {isUser &&
+              <li className="nav-item">
+                <Link className="nav-link text-white" to="/profilUser">Profil
+                </Link>
+              </li> }
+            {isUser &&
             <li className="nav-item">
               <Link className="nav-link text-white" to="/Favorite">Favoris</Link>
             </li>
@@ -94,7 +99,7 @@ function MyAppNav() {
             {isTrader &&
               <li className="nav-item">
                 <Link className="nav-link text-white" to="/profilTrader">
-                  Profil Commerçant
+                  Profil
                 </Link>
               </li>}
               {(isTrader || isUser) && (
