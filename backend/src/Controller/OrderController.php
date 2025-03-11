@@ -62,25 +62,25 @@ class OrderController extends AbstractController
         }
         
         try {
-            // 1️⃣ Créer une nouvelle commande
+            // Créer une nouvelle commande
             error_log('Début de la création de la commande');  // Log pour le début de la commande
             $order = new Order();
             $order->setUser($user);
             $order->setCart($cart);
             $order->setCreatedAt(new \DateTimeImmutable());
         
-            // 2️⃣ Calculer le montant total
+            // Calculer le montant total
             $totalAmount = 0;
             foreach ($cartProducts as $cartProduct) {
                 $totalAmount += $cartProduct->getQuantity() * $cartProduct->getProduct()->getPrice();
             }
             $order->setTotalAmount($totalAmount);
             
-            // 3️⃣ Générer un numéro de commande
+            // Générer un numéro de commande
             $orderNumber = (int) rand(1000, 9999);  // Assurer que c'est un entier
             $order->setOrderNumber($orderNumber);
             
-            // 4️⃣ Définir le statut de la commande (ex : "PENDING")
+            // Définir le statut de la commande (ex : "PENDING")
             $order->setStatus(OrderStatus::PENDING);  // Définir un statut par défaut
             
             error_log('Numéro de commande généré : ' . $orderNumber);  // Log pour le numéro de commande
@@ -89,7 +89,7 @@ class OrderController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
             
-            // 5️⃣ Créer un nouveau panier vide pour l'utilisateur (sans ajouter les produits de l'ancien panier)
+            // Créer un nouveau panier vide pour l'utilisateur (sans ajouter les produits de l'ancien panier)
             error_log('Création d\'un nouveau panier vide pour l\'utilisateur ' . $userId);  // Log pour la création d'un nouveau panier
             $newCart = new Cart();
             $newCart->setUser($user);
@@ -98,7 +98,7 @@ class OrderController extends AbstractController
             
             error_log('Nouveau panier créé avec ID : ' . $newCart->getId());  // Log pour l'ID du nouveau panier
             
-            // 6️⃣ Associer les produits à la commande, sans les supprimer
+            // Associer les produits à la commande, sans les supprimer
             foreach ($cartProducts as $cartProduct) {
                 $cartProduct->setOrder($order);  // Associer chaque produit à la commande
                 $entityManager->persist($cartProduct);  // Sauvegarder le changement
@@ -106,7 +106,7 @@ class OrderController extends AbstractController
             
             $entityManager->flush();
             
-            // 7️⃣ Retourner l'ID du nouveau panier et de la commande
+            // Retourner l'ID du nouveau panier et de la commande
             error_log('Retour des informations de la commande et du nouveau panier.');  // Log avant de retourner la réponse
             return new JsonResponse([
                 'message' => 'Commande réussie.',
