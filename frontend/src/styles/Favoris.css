@@ -24,6 +24,16 @@
     margin-top: 10px;
 }
 
+.favoris-title{ font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0;
+    padding-top: 30px;
+    color: #000000; /* Titre en noir */
+    text-transform: uppercase;
+    width: 100%;
+    text-align: left; 
+}
+
 .favoris-header .favoris-title {
     font-size: 2.5rem;
     font-weight: 600;

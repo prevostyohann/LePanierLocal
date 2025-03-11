@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // après avoir fait npm install 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import image from '../image/logoLPL.png';
 import { FaShoppingCart } from "react-icons/fa";
+// import '../styles/Nav.css';
  
 import Logout from './Logout'
  

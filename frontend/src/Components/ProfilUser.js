@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MyAppNav from './Nav';
+import '../styles/ProfilUser.css';
 
 const Commandes = () => {
     const [orders, setOrders] = useState([]);
@@ -38,37 +39,35 @@ const Commandes = () => {
             } finally {
                 setLoading(false);
             }
-            
         };
-        
 
         fetchOrders();
     }, []); // Appeler cette fonction une seule fois au montage du composant
 
     return (
-        <div className="commandes-container">
+        <div className="command-container">
             <MyAppNav />
-            <div className="commandes-header">
-                <h2 className="commandes-title">Mes Commandes</h2>
-                <div className="commandes-separator"></div> {/* Barre de séparation sous le titre */}
+            <div className="command-header">
+                <h2 className="command-title">Mes Commandes</h2>
+                <div className="command-separator"></div> {/* Barre de séparation sous le titre */}
             </div>
 
-            {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Afficher un message d'erreur si nécessaire */}
+            {errorMessage && <p className="command-error-message">{errorMessage}</p>} {/* Afficher un message d'erreur si nécessaire */}
 
-            <div className="commandes-grid">
+            <div className="command-list">
                 {loading ? (
                     <p>Chargement des commandes...</p> // Message pendant le chargement
                 ) : orders.length > 0 ? (
                     orders.map((order) => (
-                        <div className="commande-card" key={order.order.order_id}>
-                            <div className="commande-info">
+                        <div className="command-card" key={order.order.order_id}>
+                            <div className="command-info">
                                 <h3>Commande ID: {order.order.order_id}</h3>
                                 <p><strong>Numéro de commande:</strong> {order.order.order_number}</p>
                                 <p><strong>Date de création:</strong> {order.order.created_at}</p>
                                 <p><strong>Statut:</strong> {order.order.status}</p>
                                 <p><strong>Montant total:</strong> {order.order.total_amount}€</p>
 
-                                <div className="commande-products">
+                                <div className="command-products">
                                     <h4>Produits :</h4>
                                     <ul>
                                         {order.products.map((product) => (

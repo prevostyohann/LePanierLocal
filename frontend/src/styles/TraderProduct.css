@@ -1,0 +1,189 @@
+/* Style général */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Conteneur principal */
+.product-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre principal */
+h2 {
+    text-align: center;
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Messages d'erreur et de succès */
+.error-message,
+.success-message {
+    text-align: center;
+    font-size: 14px;
+}
+
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}
+
+/* Liste des produits */
+.product-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-info h3 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.product-info p {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Formulaire d'ajout de produit */
+.product-form {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-form div {
+    margin-bottom: 15px;
+}
+
+.product-form label {
+    font-size: 16px;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.product-form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+.product-form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Boutons ajouter (Couleur identique à la navbar) */
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff; /* Couleur de la navbar */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+/* Section Modifier et Supprimer */
+.action-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-buttons button {
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Bouton de modification */
+.action-buttons button:nth-child(1) {
+    background-color: #007bff; /* Couleur de la navbar */
+    border: 1px solid #007bff;
+}
+
+.action-buttons button:nth-child(1):hover {
+    background-color: #0056b3;
+}
+
+/* Bouton de suppression */
+.action-buttons button:nth-child(2) {
+    background-color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.action-buttons button:nth-child(2):hover {
+    background-color: #c82333;
+}
+
+/* Section des produits lorsqu'il n'y en a pas */
+.no-products {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+}
+
+/* Style du formulaire d'édition de produit */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-input {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.product-input:focus {
+    border-color: #007bff;
+    outline: none;
+}

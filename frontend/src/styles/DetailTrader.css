@@ -1,170 +1,181 @@
-/* Conteneur principal de la page de la boutique */
-.details-trader-container {
+/* 🌍 Réinitialisation globale */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* ✅ Conteneur principal de la page */
+.container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 30px;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f8f9fa;
-}
-
-/* Informations de la boutique avec fond personnalisé */
-.details-trader-header {
-    background-color: #740000; /* Fond rouge personnalisé */
-    color: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px;
-}
-
-.details-trader-header h1 {
-    font-size: 2.2rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-.details-trader-header p {
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-.details-trader-header img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 5px solid #ecf0f1;
-}
-
-/* Section des produits */
-.details-trader-products {
-    margin-top: 50px;
-}
-
-.details-trader-products h2 {
-    font-size: 2rem;
-    color: #2c3e50;
-    margin-bottom: 30px;
-    font-weight: 600;
-}
-
-.details-trader-products ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-/* Chaque produit */
-.details-trader-product-item {
-    background-color: #ffffff;
     padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.details-trader-product-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-}
-
-.details-trader-product-item h3 {
-    font-size: 1.6rem;
-    color: #34495e;
-    font-weight: 500;
-    margin-bottom: 15px;
-}
-
-.details-trader-product-item p {
-    color: #7f8c8d;
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 15px;
-}
-
-.details-trader-product-item .price {
-    font-size: 1.2rem;
+/* ✅ Titre principal du commerçant */
+h1 {
+    font-size: 2.5rem;
     font-weight: 600;
-    color: #e74c3c;
+    color: #7B0000;
+    text-transform: uppercase;
 }
 
-/* Champ de quantité */
-.details-trader-product-item input[type="number"] {
-    padding: 8px;
-    font-size: 1rem;
-    width: 60px;
-    margin-right: 15px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    outline: none;
-}
-
-.details-trader-product-item input[type="number"]:focus {
-    border-color: #3498db;
-}
-
-/* Boutons personnalisés (avec couleur forcée) */
-.details-trader-product-item button {
-    background-color: #740000 !important; /* Forcer la couleur des boutons */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+/* ✅ Description du commerçant */
+p {
     font-size: 1.1rem;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-    width: 100%;
-    display: inline-block; /* Pour ne pas déborder sur l'élément parent */
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
 }
 
-.details-trader-product-item button:hover {
-    background-color: #8c0000 !important; /* Couleur au survol */
-}
-
-.details-trader-product-item button:disabled {
-    background-color: #bdc3c7;
-    cursor: not-allowed;
-}
-
-/* Gestion des messages de succès et d'erreur */
-.details-trader-message {
-    font-weight: bold;
+/* ✅ Section des produits */
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #7B0000;
     margin-top: 30px;
 }
 
-.details-trader-success-message {
-    color: #2ecc71;
+/* ✅ Liste des produits */
+ul.list-unstyled {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0;
 }
 
-.details-trader-error-message {
+/* ✅ Carte produit */
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.33% - 20px);
+    margin: 10px 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Titre et description du produit */
+.card-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* ✅ Prix du produit */
+.card-text strong {
+    font-weight: 700;
+    color: #7B0000;
+}
+
+/* ✅ Formulaire de quantité */
+.form-group {
+    margin-top: 15px;
+}
+
+.form-group label {
+    font-size: 1rem;
+    color: #555;
+}
+
+.form-group input {
+    width: 60px;
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+/* ✅ Boutons (favoris et panier) */
+button.details-trader-product-item {
+    background-color: #7B0000;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 4px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.details-trader-product-item:hover {
+    background-color: #B81B24;
+}
+
+/* ✅ Messages d'erreur et de succès */
+.text-danger {
     color: #e74c3c;
+    font-size: 1.2rem;
+    margin-top: 20px;
 }
 
-/* Améliorations pour les petits écrans */
-@media (max-width: 768px) {
-    .details-trader-header h1 {
-        font-size: 1.8rem;
-    }
+.text-success {
+    color: #28a745;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
 
-    .details-trader-header p {
-        font-size: 0.9rem;
-    }
-
-    .details-trader-products h2 {
-        font-size: 1.8rem;
-    }
-
-    .details-trader-product-item {
+/* ✅ Responsivité */
+@media screen and (max-width: 768px) {
+    .container {
         padding: 15px;
     }
 
-    .details-trader-product-item h3 {
-        font-size: 1.4rem;
+    .card {
+        flex: 1 1 calc(50% - 20px);
     }
 
-    .details-trader-product-item button {
-        font-size: 1rem;
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .form-group input {
+        width: 50px;
+    }
+
+    button.details-trader-product-item {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .card {
+        flex: 1 1 100%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.6rem;
     }
 }

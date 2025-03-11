@@ -10,7 +10,7 @@ function ProfilTrader() {
         <MyAppNav/>
         
  
-        <h1>Bienvenue sur votre profil Commerçant</h1>
+        
 
         <TraderProduct/>
         
