@@ -18,6 +18,7 @@ import TraderProduct from './Components/TraderProduct';
 import CardTrader from './Components/CardTrader';
 import './App.css';
 import Cart from './Components/Cart';
+import OrderDetails from './Components/ProfilUser';
  
  
 function App() {
@@ -51,7 +52,7 @@ function App() {
                 <Route path="/Contact" element={<Contact />} />
                 <Route path="/MentionsLegales" element={<MentionsLegales />} />
                 <Route path="/card-trader" element={<CardTrader />} />
-               
+                <Route path="/profilUser" element={<OrderDetails />} />
             </Routes>
         </Router>
        

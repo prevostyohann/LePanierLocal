@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import MyAppNav from './Nav';
+import '../styles/DetailTrader.css';
 
 const DetailsTrader = () => {
     const { id } = useParams();
@@ -127,44 +128,75 @@ const DetailsTrader = () => {
     return (
         <div>
             <MyAppNav />
-            <div>
-                <h1>{trader.name}</h1>
-                <p>{trader.description}</p>
-                <p>Email: {trader.email}</p>
-                <p>Phone: {trader.phone}</p>
-                <p>Address: {trader.address}</p>
-                <p>Hours of Operation: {trader.hours_of_operation}</p>
-                <p>SIRET: {trader.siret}</p>
-                <img src={trader.profile_picture} alt={`${trader.name}'s profile`} />
-
+            <div className="container mt-4">
+                {/* Informations de la boutique */}
+                <div className="row mb-4">
+                    <div className="col-12">
+                        <h1>{trader.name}</h1>
+                        <p>{trader.description}</p>
+                        <p><strong>Email:</strong> {trader.email}</p>
+                        <p><strong>Phone:</strong> {trader.phone}</p>
+                        <p><strong>Address:</strong> {trader.address}</p>
+                        <p><strong>Hours of Operation:</strong> {trader.hours_of_operation}</p>
+                        <p><strong>SIRET:</strong> {trader.siret}</p>
+                    </div>
+                </div>
+    
+                <div className="row mb-4">
+                    <div className="col-12 col-md-6">
+                        <img
+                            src={trader.profile_picture}
+                            alt={`${trader.name}'s profile`}
+                            className="img-fluid rounded shadow-sm"
+                        />
+                    </div>
+                </div>
+    
+                {/* Section des produits */}
                 <h2>Products</h2>
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                <ul>
+                {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                
+                <ul className="list-unstyled">
                     {products.map(product => (
-                        <li key={product.id}>
-                            <h3>{product.name}</h3>
-                            <p>{product.description}</p>
-                            <p>Prix: {product.price} €</p>
-                            <div>
-                                <label>Quantité :</label>
-                                <input
-                                    type="number"
-                                    min="1"
-                                    value={quantities[product.id] || 1} // Affiche la quantité spécifique
-                                    onChange={(e) => handleQuantityChange(e, product.id)} // Met à jour la quantité de ce produit
-                                />
+                        <li key={product.id} className="card mb-3">
+                            <div className="card-body">
+                                <h3 className="card-title">{product.name}</h3>
+                                <p className="card-text">{product.description}</p>
+                                <p className="card-text"><strong>Prix:</strong> {product.price} €</p>
+                                
+                                <div className="form-group">
+                                    <label>Quantité :</label>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        value={quantities[product.id] || 1}
+                                        onChange={(e) => handleQuantityChange(e, product.id)}
+                                        className="form-control w-25 d-inline-block"
+                                    />
+                                </div>
+    
+                                <button
+                                    className="details-trader-product-item button"
+                                    onClick={() => addToFavorites(product.id)}
+                                >
+                                    Ajouter aux favoris
+                                </button>
+                                <button
+                                    className="details-trader-product-item button"
+                                    onClick={() => addToCart(product.id)}
+                                >
+                                    🛒 Ajouter au panier
+                                </button>
                             </div>
-
-                            <button onClick={() => addToFavorites(product.id)}>Ajouter aux favoris</button>
-                            <button onClick={() => addToCart(product.id)}>🛒 Ajouter au panier</button>
                         </li>
                     ))}
                 </ul>
-                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+    
+                {successMessage && <p className="text-success">{successMessage}</p>}
+                {errorMessage && <p className="text-danger">{errorMessage}</p>}
             </div>
         </div>
     );
-};
+}
 
 export default DetailsTrader;

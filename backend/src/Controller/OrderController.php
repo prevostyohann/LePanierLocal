@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Config\OrderStatus;
 use App\Entity\Order;
 use App\Entity\CartProduct;
-use app\Repository\ProductRepository;
+use App\Repository\ProductRepository;
 use App\Entity\Cart;
 use App\Repository\UserRepository;
 use App\Repository\CartRepository;
@@ -124,34 +124,40 @@ class OrderController extends AbstractController
     
 
     // Afficher le panier pour un utilisateur spécifique
-    #[Route('/show-order/{orderId}', name: 'app_order_show', methods: ['GET'])]
-    public function showOrder($orderId, OrderRepository $orderRepository, CartProductRepository $cartProductRepository, ProductRepository $productRepository): JsonResponse
-    {
-        // Trouver la commande par ID
-        $order = $orderRepository->find($orderId);
-        if (!$order) {
-            return new JsonResponse(['error' => 'Commande introuvable.'], 404);
-        }
+   // Afficher les commandes pour un utilisateur spécifique
+#[Route('/show-orders/{userId}', name: 'app_order_show', methods: ['GET'])]
+public function showOrders($userId, OrderRepository $orderRepository, CartProductRepository $cartProductRepository, ProductRepository $productRepository): JsonResponse
+{
+    // Trouver les commandes de l'utilisateur par userId
+    $orders = $orderRepository->findBy(['user' => $userId]); // On filtre par user_id
     
-        // Vérifier si le statut de la commande est "archivé"
-        if ($order->getStatus() !== OrderStatus::ARCHIVED) {
-            return new JsonResponse(['error' => 'Commande non archivée.'], 404);
-        }
-    
-        // Trouver le panier associé à la commande
-        $cart = $order->getCart();
-        if (!$cart) {
-            return new JsonResponse(['error' => 'Panier non trouvé pour cette commande.'], 404);
-        }
-    
-        // Récupérer les produits du panier
-        $cartProducts = $cartProductRepository->findBy(['cart' => $cart]);
-    
+    if (!$orders) {
+        return new JsonResponse(['error' => 'Aucune commande trouvée pour cet utilisateur.'], 404);
+    }
+
+    // Tableau pour stocker les informations des commandes
+    $ordersData = [];
+
+    foreach ($orders as $order) {
+        // Ajouter des informations sur chaque commande
+        $orderData = [
+            'order_id' => $order->getId(),
+            'order_number' => $order->getOrderNumber(),
+            'created_at' => $order->getCreatedAt()->format('Y-m-d H:i:s'),
+            'status' => $order->getStatus(),
+            'total_amount' => $order->getTotalAmount(),
+        ];
+
+        // Récupérer les produits de la commande via la table CartProduct
+        $cartProducts = $cartProductRepository->findBy(['order' => $order]); // On filtre par order_id
+
         $cartArray = [];
         foreach ($cartProducts as $cartProduct) {
+            // Récupérer le produit à partir de l'entité CartProduct
             $product = $cartProduct->getProduct();
+
+            // Ajouter les informations du produit dans le tableau
             $cartArray[] = [
-                'cart_id' => $cart->getId(),
                 'cart_product_id' => $cartProduct->getId(),
                 'product_id' => $product->getId(),
                 'name' => $product->getName(),
@@ -160,7 +166,15 @@ class OrderController extends AbstractController
                 'quantity' => $cartProduct->getQuantity(),
             ];
         }
-    
-        return new JsonResponse($cartArray, 200);
+
+        // Ajouter la commande et ses produits au tableau final
+        $ordersData[] = [
+            'order' => $orderData,
+            'products' => $cartArray
+        ];
     }
+
+    // Retourner les informations de toutes les commandes et les produits associés
+    return new JsonResponse($ordersData, 200);
+}
 }    

@@ -12,8 +12,8 @@
 /* Conteneur principal */
 .favoris-container {
     font-family: 'Montserrat', sans-serif;
-    padding: 0; /* Pas de padding ici */
-    margin: 0;  /* Pas de marge non plus */
+    padding: 0;
+    margin: 0;
 }
 
 /* En-tête avec titre à gauche et séparation */
@@ -21,97 +21,120 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 10px; /* Si tu veux un petit espacement en haut, ajuste ça */
+    margin-top: 10px;
 }
 
 .favoris-header .favoris-title {
     font-size: 2.5rem;
     font-weight: 600;
     margin: 0;
-    padding-top: 30px; /* Ajoute un peu de padding ici pour que le titre ne soit pas trop proche de la navbar */
+    padding-top: 30px;
 }
 
 /* Barre séparatrice */
 .favoris-separator {
     width: 100%;
     height: 1px;
-    background: linear-gradient(to right, #7B0000, rgba(255, 255, 255, 0)); /* Barre noire qui s'effile vers la droite */
+    background: linear-gradient(to right, #7B0000, rgba(255, 255, 255, 0));
     margin-top: 10px;
 }
 
 /* Grille des favoris */
 .favoris-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
     padding-top: 20px;
 }
 
-/* Carte de chaque favori */
+/* Carte Favori */
 .favorite-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
     padding: 20px;
+    border: 1px solid #e0e0e0;
+    position: relative;
+    overflow: hidden;
 }
 
 .favorite-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* Image du favori */
+.favorite-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .favorite-image img {
     width: 100%;
-    height: 200px;
+    height: 180px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 /* Infos du favori */
 .favorite-info {
-    padding-top: 10px;
+    text-align: center;
+    padding: 15px 0;
+    width: 100%;
 }
 
 .favorite-info h3 {
-    font-size: 1.6rem;
-    font-weight: 500;
-    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
 }
 
 .favorite-info p {
     font-size: 1rem;
-    margin: 5px 0;
+    color: #555;
+    margin-bottom: 8px;
 }
 
 .price {
     font-weight: bold;
+    font-size: 1.2rem;
+    color: #b12704;
 }
 
 /* Bouton de suppression */
 .delete-btn {
-    background-color: #ff5c5c;
+    background: linear-gradient(to right, #740000, #740000);
     color: white;
     border: none;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 10px 14px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    width: 100%;
 }
 
 .delete-btn:hover {
-    background-color: #e14d4d;
+    background: linear-gradient(to right, #d60000, #ff0000);
+    transform: scale(1.05);
 }
 
 /* Message d'erreur */
 .error-message {
     color: red;
     margin-top: 20px;
+    text-align: center;
 }
 
 /* Responsivité pour les petites tailles d'écran */

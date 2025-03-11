@@ -39,13 +39,18 @@ html, body {
     font-weight: 600;
     margin: 0;
     padding-top: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #222;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Barre séparatrice */
+/* Barre séparatrice pleine et collée à gauche */
 .cart-separator {
-    width: 100%;
+    width: 100%; /* Prend toute la largeur */
     height: 1px;
-    background: linear-gradient(to right, #7B0000, rgba(255, 255, 255, 0)); /* Barre noire qui s'effile vers la droite */
+    background: linear-gradient(to right, #7B0000, rgba(255, 255, 255, 0)); /* Dégradé de couleur */
     margin-top: 10px;
 }
 
@@ -53,85 +58,181 @@ html, body {
 .cart-list {
     list-style-type: none;
     padding-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Augmentation de la taille des cartes */
+    gap: 20px;
+    justify-items: center;
 }
 
+/* Styles pour les cartes */
 .cart-item {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.cart-item h3 {
-    font-size: 1.8rem;
-    font-weight: 500;
-}
-
-.cart-item p {
-    font-size: 1rem;
-    margin: 5px 0;
-}
-
-/* Bouton de suppression */
-.delete-btn {
-    background-color: #ff5c5c;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
+    background-color: #ffffff; /* Fond blanc */
+    border-radius: 15px; /* Coins arrondis */
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 20px;
+    width: 100%; /* Ajuste la largeur de la carte */
+    box-sizing: border-box;
+}
+
+.cart-item:hover {
+    transform: translateY(-5px); /* Élève la carte au survol */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée au survol */
+}
+
+/* Image de la carte */
+.cart-image {
+    width: 100%;
+    height: 180px; /* Réduit la hauteur de l'image */
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 15px;
+}
+
+/* Informations de la carte */
+.cart-info {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.cart-info h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #7B0000;
+    margin-bottom: 10px;
+}
+
+.cart-info p {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 8px 0;
+}
+
+/* Détails du produit */
+.cart-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #777;
     margin-top: 10px;
 }
 
-.delete-btn:hover {
-    background-color: #e14d4d;
+/* Badge (si nécessaire) */
+.cart-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #7B0000;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Bouton Commander */
-.order-btn {
-    background-color: #4CAF50;
+/* Bouton supprimer */
+.delete-btn {
+    background-color: #e74c3c;
     color: white;
     border: none;
-    padding: 15px;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
-    display: block;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     width: 100%;
+    margin-top: 15px;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Bouton commander - Réduit la largeur */
+.order-btn {
+    background-color: #7B0000;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: auto; /* Réduit la largeur */
+    max-width: 240px; /* Réduit la largeur max */
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .order-btn:hover {
-    background-color: #45a049;
+    background-color: #500000;
+    transform: scale(1.05);
+}
+
+.order-btn:active {
+    background-color: #7B0000;
+    transform: translateY(2px);
+}
+
+/* Récapitulatif de commande - Fond en blanc */
+.cart-summary {
+    background-color: #ffffff; /* Fond blanc */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 30px;
+}
+
+.cart-summary h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.cart-summary p {
+    font-size: 1.2rem;
+    color: #555;
 }
 
 /* Message d'erreur */
 .error-message {
-    color: red;
+    color: #e74c3c;
     margin-top: 20px;
     font-size: 1.2rem;
+    text-align: center;
 }
 
 /* Message de succès */
 .success-message {
-    color: green;
+    color: #2ecc71;
     margin-top: 20px;
     font-size: 1.2rem;
+    text-align: center;
 }
 
 /* Responsivité pour les petites tailles d'écran */
 @media screen and (max-width: 768px) {
     .cart-list {
-        padding: 0;
+        grid-template-columns: 1fr; /* Une carte par ligne pour les petits écrans */
     }
 
     .cart-item {
-        padding: 15px;
+        width: 100%; /* Les cartes prennent toute la largeur pour les petits écrans */
+        padding: 12px;
     }
 
     .cart-header h2 {
@@ -139,6 +240,20 @@ html, body {
     }
 
     .cart-item h3 {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
+    }
+
+    .delete-btn {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+
+    .order-btn {
+        padding: 10px 20px;
+        max-width: 200px; /* Limite la taille du bouton */
+    }
+
+    .cart-summary {
+        margin-top: 20px;
     }
 }
