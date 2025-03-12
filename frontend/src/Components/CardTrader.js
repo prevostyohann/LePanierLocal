@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/CardTrader.css"; // Import du CSS mis à jour
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const CardTrader = () => {
     const [traders, setTraders] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
@@ -10,7 +12,7 @@ const CardTrader = () => {
     useEffect(() => {
         const fetchTraders = async () => {
             try {
-                const response = await axios.get("http://localhost:8000/api/traders");
+                const response = await axios.get("${apiUrl}/api/traders");
                 if (Array.isArray(response.data.member)) {
                     setTraders(response.data.member);
                 } else {

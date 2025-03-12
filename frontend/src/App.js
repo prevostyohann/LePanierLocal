@@ -19,6 +19,13 @@ import CardTrader from './Components/CardTrader';
 import './App.css';
 import Cart from './Components/Cart';
 import OrderDetails from './Components/ProfilUser';
+
+const apiUrl = process.env.REACT_APP_API_URL; 
+
+fetch(`${apiUrl}/api/users`) // Exemple d’appel à une API
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error("Erreur :", error));
  
  
 function App() {

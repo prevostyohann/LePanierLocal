@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/TraderProduct.css';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const Product = () => {
     const [products, setProducts] = useState([]);
     const [name, setName] = useState('');
@@ -27,7 +29,7 @@ const Product = () => {
         const traderId = localStorage.getItem('trader_id');
 
         try {
-            const response = await axios.get(`http://localhost:8000/product/show/${traderId}`);
+            const response = await axios.get(`${apiUrl}/product/show/${traderId}`);
             setProducts(response.data);
         } catch (error) {
             setErrorMessage('Erreur lors du chargement des produits.');
@@ -40,7 +42,7 @@ const Product = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:8000/product/new',
+                '${apiUrl}/product/new',
                 { name, description, price, trader_id: traderId },
                 {
                     headers: {
@@ -64,7 +66,7 @@ const Product = () => {
         const traderId = localStorage.getItem('trader_id');
 
         try {
-            await axios.delete(`http://localhost:8000/product/${productId}/delete`, {
+            await axios.delete(`${apiUrl}/product/${productId}/delete`, {
                 headers: { "Content-Type": "application/json" },
                 data: JSON.stringify({ trader_id: traderId }),
             });
@@ -95,7 +97,7 @@ const Product = () => {
 
         try {
             const response = await axios.put(
-                `http://localhost:8000/product/${productId}/edit`,
+                `${apiUrl}/product/${productId}/edit`,
                 { ...editedProduct, trader_id: traderId },
                 {
                     headers: {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MyAppNav from './Nav';
+
+const apiUrl = process.env.REACT_APP_API_URL;
  
 const UserProduct = () => {
     const [products, setProducts] = useState([]);
@@ -24,7 +26,7 @@ const UserProduct = () => {
     // Fonction pour récupérer les produits
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/product/show');
+            const response = await axios.get('${apiUrl}/product/show');
             setProducts(response.data); // Met à jour la liste des produits
         } catch (error) {
             setErrorMessage('Erreur lors du chargement des produits.');
@@ -40,7 +42,7 @@ const UserProduct = () => {
         e.preventDefault();
         try {
             const response = await axios.post(
-                'http://localhost:8000/product/new',
+                '${apiUrl}/product/new',
                 {
                     name: name,
                     description: description,
@@ -68,7 +70,7 @@ const UserProduct = () => {
  
     const handleDelete = async (productId) => {
         try {
-            const response = await axios.delete(`http://localhost:8000/product/${productId}/delete`);
+            const response = await axios.delete(`${apiUrl}/product/${productId}/delete`);
             setSuccessMessage('Produit supprimé avec succès');
             fetchProducts(); // Rafraîchir la liste des produits après suppression
         } catch (error) {
@@ -81,7 +83,7 @@ const UserProduct = () => {
  
         try {
             const response = await axios.put(
-                `http://localhost:8000/product/${productId}/edit`,
+                `${apiUrl}/product/${productId}/edit`,
                 {
                     name: name,
                     description: description,
@@ -113,7 +115,7 @@ const UserProduct = () => {
    
         try {
             const response = await axios.post(
-                'http://localhost:8000/favorite/add',  // URL de l'API pour ajouter aux favoris
+                '${apiUrl}/favorite/add',  // URL de l'API pour ajouter aux favoris
                 { productId },  // Corps de la requête avec l'ID du produit
                 {
                     headers: {

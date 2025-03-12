@@ -3,6 +3,8 @@ import axios from 'axios';
 import MyAppNav from './Nav';
 import "../styles/Favoris.css"; // Assure-toi que le fichier CSS est bien importé
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const Favoris = () => {
     const [favorites, setFavorites] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
@@ -20,7 +22,7 @@ const Favoris = () => {
                     return;
                 }
 
-                const response = await axios.get('http://localhost:8000/favorite/show', {
+                const response = await axios.get('${apiUrl}/favorite/show', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'X-USER-ID': userId,
@@ -41,7 +43,7 @@ const Favoris = () => {
     const handleDelete = async (favoriteId) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:8000/favorite/delete/${favoriteId}`, {
+            await axios.delete(`${apiUrl}/favorite/delete/${favoriteId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },

@@ -3,6 +3,8 @@ import axios from 'axios';
 import MyAppNav from './Nav';
 import "../styles/Cart.css"; // Assure-toi que le fichier CSS est bien importé
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const Cart = () => {
     const [cart, setCart] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
@@ -21,7 +23,7 @@ const Cart = () => {
                     return;
                 }
 
-                const response = await axios.get('http://localhost:8000/cart/show', {
+                const response = await axios.get('${apiUrl}/cart/show', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'X-USER-ID': userId,
@@ -54,7 +56,7 @@ const Cart = () => {
             }
     
             // Envoi de la requête pour supprimer le produit avec l'ID valide
-            await axios.delete(`http://localhost:8000/cart/delete/${cartProductIdInt}`, {
+            await axios.delete(`${apiUrl}/cart/delete/${cartProductIdInt}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
@@ -91,7 +93,7 @@ const Cart = () => {
             }
 
             // Faire la requête pour ajouter la commande
-            const response = await axios.post(`http://localhost:8000/order/Add`, {}, {
+            const response = await axios.post(`${apiUrl}/order/Add`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'X-USER-ID': userId,

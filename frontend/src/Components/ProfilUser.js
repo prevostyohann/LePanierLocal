@@ -3,6 +3,8 @@ import axios from 'axios';
 import MyAppNav from './Nav';
 import '../styles/ProfilUser.css';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const Commandes = () => {
     const [orders, setOrders] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
@@ -23,7 +25,7 @@ const Commandes = () => {
                 }
 
                 // Effectuer la requête pour récupérer les commandes de l'utilisateur
-                const response = await axios.get(`http://localhost:8000/order/show-orders/${userId}`, {
+                const response = await axios.get(`${apiUrl}/order/show-orders/${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'X-USER-ID': userId, // Passer l'ID utilisateur dans les en-têtes

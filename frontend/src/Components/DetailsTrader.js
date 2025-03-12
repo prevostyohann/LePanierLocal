@@ -4,6 +4,8 @@ import axios from 'axios';
 import MyAppNav from './Nav';
 import '../styles/DetailTrader.css';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const DetailsTrader = () => {
     const { id } = useParams();
     const [trader, setTrader] = useState(null);
@@ -15,7 +17,7 @@ const DetailsTrader = () => {
     useEffect(() => {
         const fetchTraderDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/trader/${id}`);
+                const response = await axios.get(`${apiUrl}/api/trader/${id}`);
                 setTrader(response.data.trader);
                 setProducts(response.data.products);
                 // Initialiser les quantités des produits à 1
@@ -47,7 +49,7 @@ const DetailsTrader = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:8000/favorite/add',
+                '${apiUrl}/favorite/add',
                 { userId: user_id, productId },
                 {
                     headers: {
@@ -88,7 +90,7 @@ const DetailsTrader = () => {
                 quantity: quantities[productId]  // Utilise la quantité actuelle de ce produit
             };
             
-            const response = await axios.post('http://localhost:8000/cart/add',
+            const response = await axios.post('${apiUrl}/cart/add',
                 payload,
                 {
                     headers: {

@@ -10,6 +10,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Login.css"; // Import du CSS
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 // Liste des catégories avec icônes associées
 const categories = [
     { name: "Soins-Beauté", link: "/soins", img: "/images/soins.jpg", icon: faSpa },
@@ -65,7 +67,7 @@ const Login = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:8000/login',
+                '${apiUrl}/login',
                 { email, password },
                 { headers: { "Content-Type": 'application/ld+json' } }
             );

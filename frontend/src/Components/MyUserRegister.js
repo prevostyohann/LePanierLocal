@@ -20,6 +20,8 @@ import {
 import '../styles/Register.css';
 import { useNavigate } from 'react-router-dom';
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 // Liste des catégories avec icônes associées
 const categories = [
   { name: "Soins-Beauté", link: "/soins", img: "/images/soins.jpg", icon: faSpa },
@@ -99,7 +101,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:8000/register',
+        '${apiUrl}/register',
         {
           username: data.username,
           email: data.email,
