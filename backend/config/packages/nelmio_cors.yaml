@@ -1,7 +1,7 @@
 nelmio_cors:
     defaults:
         allow_credentials: true
-        allow_origin: ['http://localhost:3000', 'http://51.83.69.138:8020'] # L'origine de ton frontend
+        allow_origin: ['http://localhost:3000', 'http://51.83.69.138:8020', 'http://51.210.105.164:80'] # L'origine de ton frontend
         allow_headers: ['Content-Type', 'Authorization', 'X-USER-ID', 'X-CART-ID', X-ORDER-ID]
         expose_headers: []
         max_age: 3600
