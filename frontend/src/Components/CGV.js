@@ -1,9 +1,12 @@
 import React from 'react';
+import NavForm from './NavForm';
+
 
 
 function CGV (){
     return (
         <div>
+            <NavForm/>
             <h1>Conditions Générales de Vente</h1>
 
             <p>
@@ -45,6 +48,7 @@ Les présentes CGV sont régies par le droit français. En cas de litige, les pa
 16. Contact
 Pour toute question ou réclamation concernant les présentes CGV, l'Utilisateur peut contacter la Plateforme à l'adresse suivante : Formulaire de contact ici.
            </p>
+           
         </div>
     )
 };

@@ -18,11 +18,9 @@ class UserRegisterController extends AbstractController
 {
     #[Route('/register', name: 'api_register', methods: ['POST'])]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
-    {   error_log("ok j'suis au debut");
+    { 
         $data = json_decode($request->getContent(), true);
            
-        error_log('Données reçues du frontend : ' . print_r($data, true));
-
         if (!isset($data['email'], $data['plainPassword'], $data['username'])) {
             return new JsonResponse(['error' => 'Missing parameters'], Response::HTTP_BAD_REQUEST);
         }
@@ -34,7 +32,7 @@ class UserRegisterController extends AbstractController
 
         // var_dump($user);
 
-        // error_log('Objet User avant le hash du mot de passe : ' . print_r($user, true));
+     
 
         // hash the password
         $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));

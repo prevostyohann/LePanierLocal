@@ -22,10 +22,9 @@ class TraderRegisterController extends AbstractController
 {
     #[Route('/registerTrader', name: 'register', methods: ['POST'])]
     public function registerTrader(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
-    {  error_log('saluttttttttttttttttttttttttttttzejbhfizrjqBFZRBGRGMJFGNERMJGER');
+    { 
         $data = json_decode($request->getContent(), true);
            
-        error_log('Données reçues du frontend : ' . print_r($data, true));
  
         if (!isset($data['email'], $data['plainPassword'], $data['name'])) {
             return new JsonResponse(['error' => 'Missing parameters'], Response::HTTP_BAD_REQUEST);
@@ -39,7 +38,6 @@ class TraderRegisterController extends AbstractController
  
         $trader->setCreatedAt(new \DateTimeImmutable());
  
-        error_log('Objet User avant le hash du mot de passe : ' . print_r($trader, true));
  
         // hash the password
         $trader->setPassword($userPasswordHasher->hashPassword($trader, $plainPassword));
@@ -55,24 +53,24 @@ class TraderRegisterController extends AbstractController
         }
 
         
-        // if (isset($data['category'])) {
-        //     $category = $entityManager->getRepository(Category::class)->find($data['category']);
-        //     if ($category) {
-        //         $trader->setCategory($category);
-        //     } else {
-        //         return new JsonResponse(['error' => 'Invalid category ID'], Response::HTTP_BAD_REQUEST);
-        //     }
-        // }
+        if (isset($data['category'])) {
+            $category = $entityManager->getRepository(Category::class)->find($data['category']);
+            if ($category) {
+                $trader->setCategory($category);
+            } else {
+                return new JsonResponse(['error' => 'Invalid category ID'], Response::HTTP_BAD_REQUEST);
+            }
+        }
     
-        // // Fetch and set the SubCategory entity
-        // if (isset($data['sub_category'])) {
-        //     $subCategory = $entityManager->getRepository(SubCategory::class)->find($data['sub_category']);
-        //     if ($subCategory) {
-        //         $trader->setSubCategory($subCategory);
-        //     } else {
-        //         return new JsonResponse(['error' => 'Invalid sub-category ID'], Response::HTTP_BAD_REQUEST);
-        //     }
-        // }
+        // Fetch and set the SubCategory entity
+        if (isset($data['sub_category'])) {
+            $subCategory = $entityManager->getRepository(SubCategory::class)->find($data['sub_category']);
+            if ($subCategory) {
+                $trader->setSubCategory($subCategory);
+            } else {
+                return new JsonResponse(['error' => 'Invalid sub-category ID'], Response::HTTP_BAD_REQUEST);
+            }
+        }
  
  
         $entityManager->persist($trader);

@@ -1,0 +1,138 @@
+/* 🌍 Réinitialisation globale */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    width: 100%;
+}
+
+/* ✅ Conteneur principal des commandes */
+.command-container {
+    display: flex;
+    flex-direction: column; /* Aligner la navbar en haut et les autres éléments en bas */
+    min-height: 100vh; /* S'assurer que le conteneur prend toute la hauteur de l'écran */
+}
+
+/* ✅ En-tête */
+.command-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px;
+}
+
+.command-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0;
+    padding-top: 30px;
+    color: #000000; /* Titre en noir */
+    text-transform: uppercase;
+    width: 100%;
+    text-align: left; /* Aligner le texte à gauche */
+}
+
+/* ✅ Barre séparatrice entre le titre et le contenu */
+.command-separator {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, #7B0000, transparent);
+    margin-top: 5px;
+}
+
+/* ✅ Liste des commandes */
+.command-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    flex-grow: 1; /* S'assurer que cette section prend le reste de l'espace disponible */
+}
+
+/* ✅ Carte commande */
+.command-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-left: 5px solid #7B0000;
+    width: 100%;
+}
+
+.command-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* ✅ Informations de commande */
+.command-info h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.command-info p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+/* ✅ Barre séparatrice entre les infos de la commande et les produits */
+.command-separator-products {
+    width: 100%;
+    height: 1px;
+    background: #ddd;
+    margin: 20px 0;
+}
+
+/* ✅ Liste des produits dans la commande */
+.command-products h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.command-products ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.command-products li {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* ✅ Message d'erreur */
+.command-error-message {
+    color: #e74c3c;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* ✅ Responsivité */
+@media screen and (max-width: 768px) {
+    .command-title {
+        font-size: 2rem;
+    }
+
+    .command-list {
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .command-card {
+        padding: 15px;
+    }
+}

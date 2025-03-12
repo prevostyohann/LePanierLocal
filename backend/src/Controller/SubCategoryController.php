@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SubCategoryController extends AbstractController
 {
-    #[Route('/subcategories', name: 'subcategories')]
+    #[Route('api/subcategories', name: 'subcategories')]
     public function getSubCategories(Request $request, SubCategoryRepository $subCategoryRepository): JsonResponse
     {
         $categoryId = $request->query->get('category_id');
