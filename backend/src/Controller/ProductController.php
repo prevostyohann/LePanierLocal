@@ -45,7 +45,6 @@ final class ProductController extends AbstractController
         // Décoder les données JSON reçues de React
         $obj = json_decode($request->getContent(), true);
 
-        error_log('Données reçues du frontend : ' . print_r($obj, true));
 
         // Récupérer le trader_id depuis les données de la requête
         $traderId = $obj['trader_id'] ?? null;
@@ -112,11 +111,9 @@ final class ProductController extends AbstractController
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['PUT'])]
     public function edit($id, Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
     {
-        error_log('Début de la requête pour l\'ID produit : ' . $id); // Log début de la requête
 
         // Récupérer le produit existant à partir de l'ID
         $product = $entityManager->getRepository(Product::class)->find($id);
-        error_log('ID du produit : ' . $id);
 
         if (!$product) {
             return new JsonResponse(['error' => 'Produit non trouvé.'], JsonResponse::HTTP_NOT_FOUND);
@@ -152,7 +149,6 @@ final class ProductController extends AbstractController
         // Sauvegarder les modifications en base de données
         $entityManager->flush();
 
-        error_log('Données mises a jours: ' . print_r($obj, true));
 
         return new JsonResponse(['message' => 'Produit mis à jour avec succès.'], JsonResponse::HTTP_OK);
     }

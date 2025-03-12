@@ -30,10 +30,6 @@ class CartController extends AbstractController
         $userId = $request->headers->get('X-USER-ID'); // ID utilisateur depuis les headers
         $productId = $data['productId'] ?? null; // 🔄 Corrigé (avant: `product_id`)
     
-        // Ajout des logs pour debug
-        error_log('Données reçues : ' . print_r($data, true));
-        error_log('UserID reçu : ' . $userId);
-        error_log('ProductID reçu : ' . $productId);
     
         if (!$userId || !$productId) {
             return new JsonResponse(['error' => 'Données manquantes.', 'userId' => $userId, 'productId' => $productId], 400);

@@ -28,7 +28,7 @@ const Cart = () => {
                     },
                 });
 
-                console.log("Données du panier:", response.data); // Vérifie la structure de la réponse
+               
                 setCart(response.data);
             } catch (error) {
                 setErrorMessage(error.response?.data?.message || 'Erreur lors du chargement du panier.');
@@ -63,7 +63,6 @@ const Cart = () => {
             // Mettre à jour la liste du panier après suppression
             setCart(cart.filter(item => item.cart_product_id !== cartProductIdInt));
         } catch (error) {
-            console.error('Erreur lors de la suppression du produit du panier', error);
             setErrorMessage('Erreur lors de la suppression.');
         }
     };
@@ -83,12 +82,8 @@ const Cart = () => {
             // Utiliser cart[0].cart_id pour récupérer l'ID du panier
             const cartId = cart[0].cart_id;  // Notez l'usage de `cart_id` ici
 
-            // Log des données envoyées pour déboguer
-            console.log('Données envoyées dans l\'API Order:');
-            console.log('Token:', token);
-            console.log('User ID:', userId);
-            console.log('Cart ID:', cartId); // Vérifie que cartId est bien l'ID du panier global
 
+         
             // Vérifie que l'ID du panier est valide
             if (!cartId) {
                 setErrorMessage('Cart ID non valide.');
@@ -104,8 +99,7 @@ const Cart = () => {
                 },
             });
 
-            // Log de la réponse de l'API
-            console.log('Réponse de l\'API:', response.data);
+      
 
             // Réponse en cas de succès
             setSuccessMessage('Commande réussie.');
@@ -114,7 +108,7 @@ const Cart = () => {
         } catch (error) {
             // Log des erreurs en cas d'échec de la requête
             setErrorMessage(error.response?.data?.message || 'Erreur lors de la commande.');
-            console.error('Erreur commande', error);
+           
         }
     };
 

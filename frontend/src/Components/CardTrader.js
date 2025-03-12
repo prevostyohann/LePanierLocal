@@ -17,7 +17,7 @@ const CardTrader = () => {
                     throw new Error("Format de réponse inattendu");
                 }
             } catch (error) {
-                console.error("Erreur API :", error);
+                
                 setErrorMessage("Erreur lors du chargement des boutiques.");
             }
         };

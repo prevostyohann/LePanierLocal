@@ -32,7 +32,6 @@ const Commandes = () => {
 
                 // Mettre à jour les commandes avec la réponse reçue
                 setOrders(response.data);
-                console.log(response.data);
             } catch (error) {
                 // Afficher un message d'erreur en cas d'échec
                 setErrorMessage(error.response?.data?.message || 'Erreur lors du chargement des commandes.');

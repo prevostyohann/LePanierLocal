@@ -9,7 +9,6 @@ function Contact(){
         { name: 'message', label: 'Message : ', type: 'textarea', placeholder: 'Ecrire votre message', required: false  }, ]; 
         
         const handleSubmit = (formData) => {
-             console.log('Form Data:', formData); 
             }; 
 
 

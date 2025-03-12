@@ -99,7 +99,6 @@ const DetailsTrader = () => {
                     },
                 }
             );
-            console.log('Réponse du serveur:', response.data);
             
             // Vérifier si le produit est déjà dans le panier
             if (response.data.productAlreadyInCart) {
@@ -114,7 +113,6 @@ const DetailsTrader = () => {
 
         } catch (error) {
             setErrorMessage(error.response?.data?.error || 'Erreur lors de l\'ajout au panier.');
-            console.error('Erreur lors de l\'ajout au panier:', error.response?.data);
         }
     };
 
