@@ -37,7 +37,7 @@ const MyForm = ({ fields, onSubmit }) => {
 
     // Fetch sub-categories based on selected category
     if (name === 'category') {
-      fetch(`http://localhost:8000/subcategories?category_id=${value}`)
+      fetch(`http://localhost:8000/api/subcategories?category_id=${value}`)
         .then(response => response.json())
         .then(data => {
           setSubCategories(data);
@@ -76,6 +76,11 @@ const MyForm = ({ fields, onSubmit }) => {
     } else {
       setErrors({});
       onSubmit(formData);
+      setFormData(fields.reduce((acc, field) => {
+        acc[field.name] = '';
+        return acc;
+      }, {}));
+      
     }
   };
 

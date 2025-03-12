@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MyAppNav from './Nav';
  
-const Product = () => {
+const UserProduct = () => {
     const [products, setProducts] = useState([]);
     const [userId, setUserId] = useState(''); // Assure-toi que l'ID de l'utilisateur est défini
     const [name, setName] = useState('');
@@ -198,4 +198,4 @@ const Product = () => {
     );
 };
  
-export default Product;
+export default UserProduct;

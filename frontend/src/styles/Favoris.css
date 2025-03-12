@@ -1,0 +1,163 @@
+/* Favoris.css */
+
+/* Reset global margin and padding */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Conteneur principal */
+.favoris-container {
+    font-family: 'Montserrat', sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+/* En-tête avec titre à gauche et séparation */
+.favoris-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px;
+}
+
+.favoris-title{ font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0;
+    padding-top: 30px;
+    color: #000000; /* Titre en noir */
+    text-transform: uppercase;
+    width: 100%;
+    text-align: left; 
+}
+
+.favoris-header .favoris-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0;
+    padding-top: 30px;
+}
+
+/* Barre séparatrice */
+.favoris-separator {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, #7B0000, rgba(255, 255, 255, 0));
+    margin-top: 10px;
+}
+
+/* Grille des favoris */
+.favoris-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    padding-top: 20px;
+}
+
+/* Carte Favori */
+.favorite-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    position: relative;
+    overflow: hidden;
+}
+
+.favorite-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Image du favori */
+.favorite-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.favorite-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Infos du favori */
+.favorite-info {
+    text-align: center;
+    padding: 15px 0;
+    width: 100%;
+}
+
+.favorite-info h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.favorite-info p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #b12704;
+}
+
+/* Bouton de suppression */
+.delete-btn {
+    background: linear-gradient(to right, #740000, #740000);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+
+.delete-btn:hover {
+    background: linear-gradient(to right, #d60000, #ff0000);
+    transform: scale(1.05);
+}
+
+/* Message d'erreur */
+.error-message {
+    color: red;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Responsivité pour les petites tailles d'écran */
+@media screen and (max-width: 768px) {
+    .favoris-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .favorite-card {
+        padding: 15px;
+    }
+
+    .favorite-image img {
+        height: 150px;
+    }
+}

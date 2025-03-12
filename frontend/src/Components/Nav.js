@@ -6,9 +6,21 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // après avoir fait npm install 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import image from '../image/logoLPL.png';
 import { FaShoppingCart } from "react-icons/fa";
+// import '../styles/Nav.css';
+ 
+import Logout from './Logout'
  
  
 function MyAppNav() {
+ 
+   // Récupération des données utilisateur/trader depuis localStorage
+   const userId = localStorage.getItem('user_id');
+   const traderId = localStorage.getItem('trader_id');
+ 
+   // Vérifie si c'est un utilisateur ou un commerçant
+   const isUser = userId !== null;
+   const isTrader = traderId !== null;
+ 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-custom">
       <div className="container-fluid">
@@ -40,14 +52,22 @@ function MyAppNav() {
               <Link className="nav-link text-white" to="/About">A propos</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/m">Message</Link>
+              <Link className="nav-link text-white" to="/message">Message</Link>
             </li>
+            {isUser &&
+              <li className="nav-item">
+                <Link className="nav-link text-white" to="/profilUser">Profil
+                </Link>
+              </li> }
+            {isUser &&
             <li className="nav-item">
               <Link className="nav-link text-white" to="/Favorite">Favoris</Link>
             </li>
+            }
             <li className="nav-item">
               <Link className="nav-link text-white" to="/forum">Forum</Link>
             </li>
+            {!isUser && !isTrader && (
             <li className="nav-item dropdown">
               <button
                 className="nav-link dropdown-toggle text-white"
@@ -66,18 +86,28 @@ function MyAppNav() {
                   <Link className="dropdown-item" to="/RegisterTrader">Commerçant</Link>
                 </li>
               </ul>
-            </li>
+            </li> )}
+            {!isUser && !isTrader && (
             <li className="nav-item">
               <Link className="nav-link text-white" to="/Login">connexion</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/cart">
-                <FaShoppingCart size={24} />
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to='/Product'>Produits</Link>
-            </li>
+            </li> )}
+            {isUser &&
+              <li className="nav-item">
+                <Link className="nav-link text-white" to="/cart">
+                  <FaShoppingCart size={24} />
+                </Link>
+              </li> }
+            {isTrader &&
+              <li className="nav-item">
+                <Link className="nav-link text-white" to="/profilTrader">
+                  Profil
+                </Link>
+              </li>}
+              {(isTrader || isUser) && (
+              <li className="nav-link text-white">
+                <Logout />
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -86,5 +116,4 @@ function MyAppNav() {
 }
  
 export default MyAppNav;
- 
  
