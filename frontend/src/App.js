@@ -18,20 +18,20 @@ import TraderProduct from './Components/TraderProduct';
 import CardTrader from './Components/CardTrader';
 import './App.css';
 import Cart from './Components/Cart';
-
-
+ 
+ 
 function App() {
     const [userId, setUserId] = useState(null);
-
+ 
     useEffect(() => {
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId) {
             setUserId(storedUserId);
         }
     }, []);
-
+ 
     return (
-        
+       
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -54,8 +54,8 @@ function App() {
                
             </Routes>
         </Router>
-        
+       
     );
 }
-
+ 
 export default App;

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250307123331 extends AbstractMigration
+final class Version20250311091203 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,9 +20,7 @@ final class Version20250307123331 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE cart ADD product_id INT NOT NULL');
-        $this->addSql('ALTER TABLE cart ADD CONSTRAINT FK_BA388B74584665A FOREIGN KEY (product_id) REFERENCES product (id)');
-        $this->addSql('CREATE INDEX IDX_BA388B74584665A ON cart (product_id)');
+        $this->addSql('ALTER TABLE product CHANGE reference reference VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE trader CHANGE category_id category_id INT NOT NULL, CHANGE description description LONGTEXT NOT NULL, CHANGE phone phone INT NOT NULL, CHANGE address address VARCHAR(255) NOT NULL, CHANGE siret siret VARCHAR(255) NOT NULL');
         $this->addSql('ALTER TABLE user CHANGE email email VARCHAR(180) NOT NULL, CHANGE roles roles JSON NOT NULL, CHANGE password password VARCHAR(255) NOT NULL, CHANGE lastname lastname VARCHAR(255) NOT NULL, CHANGE firstname firstname VARCHAR(255) NOT NULL, CHANGE phone phone VARCHAR(255) NOT NULL, CHANGE address address VARCHAR(255) NOT NULL, CHANGE username username VARCHAR(255) NOT NULL, CHANGE is_admin is_admin TINYINT(1) NOT NULL, CHANGE profile_picture profile_picture VARCHAR(255) NOT NULL');
     }
@@ -30,10 +28,8 @@ final class Version20250307123331 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE cart DROP FOREIGN KEY FK_BA388B74584665A');
-        $this->addSql('DROP INDEX IDX_BA388B74584665A ON cart');
-        $this->addSql('ALTER TABLE cart DROP product_id');
-        $this->addSql('ALTER TABLE `trader` CHANGE category_id category_id INT DEFAULT NULL, CHANGE description description LONGTEXT DEFAULT NULL, CHANGE phone phone INT DEFAULT NULL, CHANGE address address VARCHAR(255) DEFAULT NULL, CHANGE siret siret VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE product CHANGE reference reference VARCHAR(255) NOT NULL');
         $this->addSql('ALTER TABLE `user` CHANGE email email VARCHAR(180) DEFAULT NULL, CHANGE roles roles JSON DEFAULT NULL, CHANGE password password VARCHAR(255) DEFAULT NULL, CHANGE lastname lastname VARCHAR(255) DEFAULT NULL, CHANGE firstname firstname VARCHAR(255) DEFAULT NULL, CHANGE phone phone VARCHAR(255) DEFAULT NULL, CHANGE address address VARCHAR(255) DEFAULT NULL, CHANGE username username VARCHAR(255) DEFAULT NULL, CHANGE is_admin is_admin TINYINT(1) DEFAULT NULL, CHANGE profile_picture profile_picture VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE `trader` CHANGE category_id category_id INT DEFAULT NULL, CHANGE description description LONGTEXT DEFAULT NULL, CHANGE phone phone INT DEFAULT NULL, CHANGE address address VARCHAR(255) DEFAULT NULL, CHANGE siret siret VARCHAR(255) DEFAULT NULL');
     }
 }

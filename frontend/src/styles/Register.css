@@ -1,0 +1,193 @@
+/* 🌍 Styles généraux */
+.register-page {
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ---- NAVBAR ---- */
+nav {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- LAYOUT PRINCIPAL ---- */
+.register-content {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 70px);
+    width: 100%;
+}
+
+/* ---- 🎠 Partie GAUCHE : Carrousels ---- */
+.trader-carousel-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+    margin-top: -70px; /* Effet de passage sous la navbar */
+}
+
+/* Colonne contenant un carrousel */
+.trader-carousel-column {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Liste d'éléments dans un carrousel */
+.trader-carousel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+/* Animation de défilement */
+.trader-carousel-column:nth-child(1) .trader-carousel-list,
+.trader-carousel-column:nth-child(3) .trader-carousel-list {
+    animation: traderScroll 45s linear infinite;
+}
+
+.trader-carousel-column:nth-child(2) .trader-carousel-list {
+    animation: traderScrollReverse 45s linear infinite;
+}
+
+/* 🎨 Style des cartes */
+.trader-carousel-card {
+    width: 90%;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.trader-carousel-card:hover {
+    transform: scale(1.05);
+}
+
+/* Icônes dans les cartes */
+.category-icon {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+/* ---- Appliquer des couleurs fixes pour éviter le changement à chaque boucle ---- */
+.trader-carousel-list .trader-carousel-card:nth-child(10n+1) { background-color: #8B0000; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+2) { background-color: #A32222; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+3) { background-color: #D96666; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+4) { background-color: #B85628; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+5) { background-color: #E0A96D; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+6) { background-color: #2C3E50; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+7) { background-color: #2F5D50; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+8) { background-color: #4A4A4A; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+9) { background-color: #5D2E46; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+10) { background-color: #FF6B35; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+11) { background-color: #8B0000; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+12) { background-color: #A32222; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+13) { background-color: #D96666; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+14) { background-color: #B85628; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+15) { background-color: #E0A96D; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+16) { background-color: #2C3E50; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+17) { background-color: #2F5D50; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+18) { background-color: #4A4A4A; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+19) { background-color: #5D2E46; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n20) { background-color: #FF6B35; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+30) { background-color: #FF6B35; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+31) { background-color: #8B0000; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+32) { background-color: #A32222; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+33) { background-color: #D96666; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+34) { background-color: #B85628; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+35) { background-color: #E0A96D; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+36) { background-color: #2C3E50; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+37) { background-color: #2F5D50; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+38) { background-color: #4A4A4A; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+39) { background-color: #5D2E46; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n40) { background-color: #FF6B35; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+41) { background-color: #E0A96D; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+42) { background-color: #2C3E50; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+43) { background-color: #2F5D50; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+44) { background-color: #4A4A4A; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n+45) { background-color: #5D2E46; }
+.trader-carousel-list .trader-carousel-card:nth-child(10n46) { background-color: #FF6B35; }
+
+
+/* 🔄 Animation Scroll Infini */
+@keyframes traderScroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes traderScrollReverse {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+/* ---- 📝 Partie DROITE : Formulaire ---- */
+.register-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #f9f9f9; */
+    padding: 20px;
+    height: 100%;
+}
+
+.register-box {
+    width: 90%;
+    max-width: 450px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.register-box h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ---- MESSAGES ERREUR & SUCCÈS ---- */
+.error-message {
+    color: red;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: green;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}

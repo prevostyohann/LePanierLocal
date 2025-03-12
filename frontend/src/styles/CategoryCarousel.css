@@ -1,54 +1,152 @@
-/* CategoryCarousel.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
-/* Cibler uniquement le carrousel avec la classe "category-carousel" */
-.category-carousel .carousel-inner {
-  display: flex;
-  overflow: hidden;
-  width: 100%;
+/* ---- CONTAINER GLOBAL ---- */
+.category-carousel-wrapper {
+    width: 84%;
+    margin: 0 auto;
+    /* background: #f9f9f9; */
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
 }
 
-/* Le conteneur des cartes qui défileront */
-.category-carousel .category-carousel-container {
-  display: flex;
-  flex: 0 0 auto;
-  width: 100%;
-  animation: scroll 20s linear infinite; /* Animation continue */
+/* ---- BARRE SÉPARATRICE ---- */
+.separator {
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #7B0000, transparent);
+    margin: 15px auto;
+    border-radius: 1px;
 }
 
-.category-carousel .category-card {
-  flex: 0 0 auto;    /* Chaque carte a une largeur fixe et ne se redimensionne pas */
-  width: 200px;      /* Largeur de chaque carte */
-  height: 250px;     /* Hauteur de chaque carte */
-  cursor: pointer;
-  margin-right: 15px; /* Espacement entre les cartes */
+/* ---- TITRE ---- */
+.category-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+    color: #222;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.category-carousel .category-card img {
-  width: 100%;
-  height: 150px;     /* Hauteur de l'image */
-  object-fit: cover; /* Maintient les proportions de l'image */
+/* ---- CONTAINER CAROUSEL ---- */
+.category-carousel {
+    width: 95%;
+    overflow: hidden;
+    position: relative;
 }
 
-/* Corps de la carte (pour le texte) */
-.category-carousel .category-card .card-body {
-  text-align: center;
-  padding: 10px;
+/* ---- CARDS CONTAINER ---- */
+.category-carousel-container {
+    display: flex;
+    width: max-content;
+    gap: 20px;
+    animation: scroll 20s linear infinite;
 }
 
-/* Animation pour faire défiler les cartes */
+/* ---- STYLE DES CARTES ---- */
+.category-card {
+    flex: 0 0 auto;
+    width: 200px;
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    
+    /* ---- Couleurs harmonieuses avec la navbar ---- */
+    background-color: var(--card-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- Appliquer des couleurs en boucle ---- */
+.category-card:nth-child(10n+1) { background-color: #8B0000; } /* Bordeaux foncé */
+.category-card:nth-child(10n+2) { background-color: #A32222; } /* Rouge intense */
+.category-card:nth-child(10n+3) { background-color: #D96666; } /* Terracotta */
+.category-card:nth-child(10n+4) { background-color: #B85628; } /* Ocre foncé */
+.category-card:nth-child(10n+5) { background-color: #E0A96D; } /* Beige doré */
+.category-card:nth-child(10n+6) { background-color: #2C3E50; } /* Bleu nuit */
+.category-card:nth-child(10n+7) { background-color: #2F5D50; } /* Vert profond */
+.category-card:nth-child(10n+8) { background-color: #4A4A4A; } /* Gris anthracite */
+.category-card:nth-child(10n+9) { background-color: #5D2E46; } /* Violet profond */
+.category-card:nth-child(10n+10) { background-color: #FF6B35; } /* Orange chaud */
+
+.category-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ---- IMAGE EN FOND ---- */
+.category-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.85);
+    transition: filter 0.3s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.category-card:hover .category-image {
+    filter: brightness(1);
+}
+
+/* ---- NOM DE LA CATÉGORIE ---- */
+.category-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 85%;
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Meilleure lisibilité */
+}
+
+/* ---- ANIMATION DU DÉFILEMENT ---- */
 @keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%); /* Défilement complet du carrousel */
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* Pour ajuster le comportement sur les petits écrans */
+/* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
-  .category-carousel .category-card {
-    width: 150px;  /* Réduire la largeur sur les petits écrans */
-    height: 200px; /* Réduire la hauteur */
-  }
+    .category-card {
+        width: 160px;
+        height: 200px;
+    }
+
+    .category-name {
+        font-size: 1.1rem;
+    }
+
+}
+
+/* ---- ICÔNE AU CENTRE DES CARTES ---- */
+.carousel-category-icon {
+    font-size: 3rem; /* Taille plus grande */
+    color: white !important;  /* Forcer la couleur en blanc */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }

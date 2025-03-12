@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+/* ---- STYLE GLOBAL ---- */
+.trader-container {
+    width: 86%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 50px;
+    /* background-color: #f9f9f9; */
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+}
+
+/* ---- BARRE SÉPARATRICE FINE ---- */
+.separator {
+    width: 80%;
+    height: 1px; /* Plus fine */
+    background: linear-gradient(to right, transparent, #7B0000, transparent);
+    margin: 15px auto;
+    border-radius: 1px;
+}
+
+
+/* ---- TITRE ---- */
+/* ---- TITRE STYLE 3 ---- */
+.title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+    color: #222;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+/* ---- GRID ---- */
+.trader-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+/* ---- CARD STYLE ---- */
+.trader-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.trader-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ---- IMAGE ---- */
+.trader-image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px 15px 0 0;
+}
+
+/* ---- INFO ---- */
+.trader-info {
+    padding: 20px;
+    text-align: center;
+    color: black;
+}
+
+.trader-info h3 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #7B0000;
+}
+
+.trader-info p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+/* ---- BOUTON ---- */
+.visit-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    background: #7B0000;
+    border-radius: 30px;
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.visit-btn:hover {
+    background: #500000;
+    transform: scale(1.05);
+}
+
+/* ---- INFOS SUPPLÉMENTAIRES ---- */
+.trader-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.trader-details i {
+    color: #7B0000;
+    margin-right: 5px;
+}
+
+/* ---- BADGE NOUVEAU ---- */
+.trader-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #7B0000;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}

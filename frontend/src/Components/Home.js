@@ -14,7 +14,6 @@ function Home() {
         <div>
         <MyAppNav/>
         <CarrouselComponent/>
-        <h3>Vos commerces par categories :</h3>
         <CategoryCarousel/>
         <CardTrader/>
         <MyFooter/>
