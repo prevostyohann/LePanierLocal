@@ -12,10 +12,12 @@ const MyForm = ({ fields, onSubmit }) => {
   const [selectOptions, setSelectOptions] = useState({});
   const [subCategories, setSubCategories] = useState([]);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     fields.forEach((field) => {
       if (field.type === 'select' && field.apiEndpoint && field.name !== 'sub_category') {
-        fetch(`http://localhost:8000${field.apiEndpoint}`)
+        fetch(`${apiUrl}/${field.apiEndpoint}`)
           .then(response => response.json())
           .then(data => {
             setSelectOptions(prevOptions => ({
@@ -37,7 +39,7 @@ const MyForm = ({ fields, onSubmit }) => {
 
     // Fetch sub-categories based on selected category
     if (name === 'category') {
-      fetch(`http://localhost:8000/api/subcategories?category_id=${value}`)
+      fetch(`${apiUrl}/api/subcategories?category_id=${value}`)
         .then(response => response.json())
         .then(data => {
           setSubCategories(data);

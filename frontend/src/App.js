@@ -40,7 +40,7 @@ function App() {
  
     return (
        
-        <Router>
+        <Router basename="/react">
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/Cart" element={<Cart />} />

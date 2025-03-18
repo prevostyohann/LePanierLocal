@@ -22,7 +22,7 @@ const Favoris = () => {
                     return;
                 }
 
-                const response = await axios.get('${apiUrl}/favorite/show', {
+                const response = await axios.get(`${apiUrl}/favorite/show`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'X-USER-ID': userId,

@@ -109,7 +109,7 @@ const MyTraderRegister = () => {
 
     try {
       const response = await axios.post(
-        '${apiUrl}/registerTrader',
+        `${apiUrl}/registerTrader`,
         {
           name: data.name,
           email: data.email,

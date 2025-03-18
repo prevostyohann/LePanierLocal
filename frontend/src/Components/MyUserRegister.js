@@ -101,7 +101,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        '${apiUrl}/register',
+        `${apiUrl}/register`,
         {
           username: data.username,
           email: data.email,

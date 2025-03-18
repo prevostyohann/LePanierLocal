@@ -12,7 +12,7 @@ const CardTrader = () => {
     useEffect(() => {
         const fetchTraders = async () => {
             try {
-                const response = await axios.get("${apiUrl}/api/traders");
+                const response = await axios.get(`/${apiUrl}/api/traders`);
                 if (Array.isArray(response.data.member)) {
                     setTraders(response.data.member);
                 } else {
